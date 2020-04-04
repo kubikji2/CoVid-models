@@ -47,5 +47,12 @@ Models for 3D printing for project Robots4Motol and various lab-ware tinkering.
       - connecting part used for holding Eppendorf 96 well and the top part of Biosphere FilterTips (yellow part)
       - very compact and fast to print design (about 40 minutes)
 
+## Biomek Serie
+ - Reversed engineered labware serie compatible with Biomek
+ - **Biomek Baths-holder**
+   - basic bath holder for four Biomek (automated laboratory workstation) 100 ml baths
+   - printing time about two hours
+-  **Biomek Baths-holder -- lightweight**
+   - improved bath holder for four Biomek (automated laboratory workstation) 100 ml baths
+   - printing time about one hour and a half
 
-     
