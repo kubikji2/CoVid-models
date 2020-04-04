@@ -21,3 +21,22 @@ Models for 3D printing for project Robots4Motol and various lab-ware tinkering.
    - **96well adapter - heavy**
      - direct descendand of original design with cylidric shafts
      - durable and solid design (no slicing done, 96well series abandoned)
+- **kvant96 serie**
+   - used in OpenTrons design with 
+   - lower part remains same; [eppensdorf 96 well](https://www.eppendorf.com/product-media/doc/en/105601_Marketing-Manual/Eppendorf_Consumables_Technical-data_Deepwell-Plate-96-2000_Eppendorf-Deepwell-Plate-96-2000-uL.pdf)
+   - upper part is dimensioned for shorter _Bioshpere FilterTips 2-200 ul_ for either holding whole rack (adapter) or holding separate filter tips (filter tip rack)
+   - **kvant96 filter tips rack**
+     - filter tips rack for previously mentioned Bioshpere FilterTips
+     - direct descendant of 96well adapter - reinforced
+     - low chance of cross contamination as each filter tip has its own cylindric shaft
+     - abandoned version as the design is unnecessary thick and complex
+   - **kvant96 filter tips rack - lightweight**
+     - improved (finalized) version of _kvant96 filter tips rack_
+     - low chance of cross-contamination as the plane sits tight to the lower part
+     - compact design and fast to print design (about 1 hour and 20 minutes)
+   - **kvant96 adapter**
+      - connecting part used for holding eppendsdors 96 well and the top part of Bioshpere FilterTips (yellow part)
+      - very compact and fast to print design (about 40 minutes)
+
+
+     
