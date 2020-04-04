@@ -4,6 +4,9 @@ Models for 3D printing for project Robots4Motol and various lab-ware tinkering.
 
 - All stls, 3mfs and gcodes are ignored
 
+# Used libraries
+- single openscad library required and provided - `round_corners.scad`
+
 # Structure and versions
 - **96well serie**
    - abandoned
