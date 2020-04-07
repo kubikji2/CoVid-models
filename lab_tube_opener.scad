@@ -15,6 +15,7 @@ d_i = 2;
 l_h = 8;
 l_d = 15;
 l_l = 50;
+l_t = 2;
 
 // pusher parameters
 p_d = 8;
@@ -53,6 +54,24 @@ module lab_tube_opener()
             cylinder(d=p_D+2*tol,h=p_t+2*eps);
         translate([0,0,p_t-eps])
             cylinder(d2=p_d+2*tol, d1=p_D+2*tol, h=p_D-p_d);
+        
+        // left hole in lever
+        translate([-l_l/2,0,-eps])
+        {
+            cylinder(d=l_d-4*l_t,h=h+2*eps);
+            cylinder(d1=l_d-2*l_t, d2=l_d-4*l_t,h=l_t);
+            translate([0,0,h-l_t+2*eps])
+                cylinder(d1=l_d-4*l_t, d2=l_d-2*l_t, h=l_t);
+        }
+        
+        // right hole in lever
+        translate([l_l/2,0,-eps])
+        {
+            cylinder(d=l_d-4*l_t,h=h+2*eps);
+            cylinder(d1=l_d-2*l_t, d2=l_d-4*l_t,h=l_t);
+            translate([0,0,h-l_t+2*eps])
+                cylinder(d1=l_d-4*l_t, d2=l_d-2*l_t, h=l_t);
+        }
     }
     
     // inner curves
