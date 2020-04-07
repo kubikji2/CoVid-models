@@ -95,34 +95,14 @@ module ftsr()
         }
     }
     
+    // brim cheater
+    translate([0,y+2*w_t+2*tol,0]) cube([x,2*w_t,0.21]);
+    
+    
 }
 
 ftsr();
 
-/*
-x = 20;
-y = 50;
-%translate([w_t, w_t, ft_h+g_t+eps])
-    cube([x-2*w_t,y-2*w_t,ft_mh+2*eps]);
-
-l_ = x-2*w_t;
-d_ = y-2*w_t;
-
-translate([w_t+l_, w_t, ft_h+g_t+eps])
-hull()
-{
-    translate([0,ft_ud/2,0])
-        rotate([0,-90,0]) cylinder(h=l_,d=0.01);
-    translate([0,0,ft_mh+2*eps])
-        rotate([0,-90,0]) cylinder(h=l_,d=0.01);
-    
-    translate([0,d_-ft_ud/2,0])
-        rotate([0,-90,0]) cylinder(h=l_,d=0.01);
-    translate([0,d_,ft_mh+2*eps])
-        rotate([0,-90,0]) cylinder(h=l_,d=0.01);
-    //translate([]) rotate([0,-90,0]) cylinder(h=x,d=0.01);
-}
-*/
 module door()
 {
     x = n_cols*g_l - 2*tol;
