@@ -1,17 +1,17 @@
 // general parameters
 $fn = 90;
 eps = 0.01;
-tol = 0.1;
+tol = 0.5;
 
 // filter tips parameters
 // stop diameter
 ft_sd = 5;
-// lower diameter
-ft_ld = 6;
 // upper diameter
 ft_ud = 7.5;
 // height
 ft_h = 15;
+// maximal height from stopper
+ft_mh = 28;
 
 // grid paramaters parameters
 n_rows = 8;
@@ -21,7 +21,7 @@ g_t = 1;
 // distance between centers
 g_l = 9;
 // horder height
-b_h = 10;
+b_h = 3;
 // general parameters
 w_t = 2;
 
@@ -29,16 +29,32 @@ module ftsr()
 {
     x = n_cols*g_l + 2*w_t;
     y = 2*n_rows*g_l + 2*w_t;
-    z = g_t + ft_h + b_h;
+    z = g_t + ft_mh + b_h;
     
     difference()
     {
         // main shape
-        cube([x,y,z]);
+        union()
+        {
+            cube([x,y,z]);
+            // adding doors
+            // main door block
+            d_x = x;
+            d_y = 2*w_t+2*tol;
+            d_z = z;
+            translate([0,y,0]) difference()
+            {
+                // main door holder
+                cube([d_x,d_y,d_z]);
+                // door hole
+                translate([w_t,-eps,w_t+eps])
+                    cube([d_x-2*w_t,w_t+2*tol+eps,z-w_t]);
+            }
+        }
         
         // main cut
         translate([w_t, w_t, ft_h+g_t+eps])
-            cube([x-2*w_t,y-2*w_t,b_h+2*eps]);
+            cube([x-2*w_t,y-2*w_t,ft_mh+2*eps]);
         // cut for tips to fall in
         for(i=[0:n_cols-1])
         {
@@ -48,21 +64,32 @@ module ftsr()
             translate([lp_x,0,-eps]) hull()
             {
                 translate([0,lp_y,0]) cylinder(d=ft_sd,h=g_t+2*eps);
-                translate([0,y-lp_y,0]) cylinder(d=ft_sd,h=g_t+2*eps);
+                translate([0,y+2*w_t+2*tol,0]) cylinder(d=ft_sd,h=g_t+2*eps);
             }
             
             // upper cut
             translate([lp_x,0,g_t]) hull()
             {
                 translate([0,lp_y,0])
-                    cylinder(d1=ft_ld,d2=ft_ud,h=ft_h+2*eps);
-                translate([0,y-lp_y,0])
-                    cylinder(d1=ft_ld,d2=ft_ud,h=ft_h+2*eps);
+                    cylinder(d=ft_ud,h=ft_mh+2*eps);
+                translate([0,y+2*w_t+2*tol,0])
+                    cylinder(d=ft_ud,h=ft_mh+2*eps);
             }
         }
     }
+    
 }
 
 ftsr();
 
+module door()
+{
+    x = n_cols*g_l - 2*tol;
+    y = w_t;
+    z = ft_mh + b_h;
+    
+    rotate([-90,0,0]) cube([x,y,z]);
+}
+
+//door();
 
