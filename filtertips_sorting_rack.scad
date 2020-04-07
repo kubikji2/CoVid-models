@@ -38,6 +38,7 @@ module ftsr()
         {
             cube([x,y,z]);
             // adding doors
+            
             // main door block
             d_x = x;
             d_y = 2*w_t+2*tol;
@@ -53,8 +54,24 @@ module ftsr()
         }
         
         // main cut
-        translate([w_t, w_t, ft_h+g_t+eps])
-            cube([x-2*w_t,y-2*w_t,ft_mh+2*eps]);
+        translate([x-w_t, w_t, ft_h+g_t+eps])
+        hull()
+        {
+            l_ = x-2*w_t;
+            d_ = y-2*w_t;
+            off = ft_ud;
+            
+            translate([0,off,0])
+                rotate([0,-90,0]) cylinder(h=l_,d=0.01);
+            translate([0,0,ft_mh-ft_h+b_h+2*eps])
+                rotate([0,-90,0]) cylinder(h=l_,d=0.01);
+            
+            translate([0,d_-off,0])
+                rotate([0,-90,0]) cylinder(h=l_,d=0.01);
+            translate([0,d_,ft_mh-ft_h+b_h+2*eps])
+                rotate([0,-90,0]) cylinder(h=l_,d=0.01);
+            //translate([]) rotate([0,-90,0]) cylinder(h=x,d=0.01);
+        }
         // cut for tips to fall in
         for(i=[0:n_cols-1])
         {
@@ -82,6 +99,30 @@ module ftsr()
 
 ftsr();
 
+/*
+x = 20;
+y = 50;
+%translate([w_t, w_t, ft_h+g_t+eps])
+    cube([x-2*w_t,y-2*w_t,ft_mh+2*eps]);
+
+l_ = x-2*w_t;
+d_ = y-2*w_t;
+
+translate([w_t+l_, w_t, ft_h+g_t+eps])
+hull()
+{
+    translate([0,ft_ud/2,0])
+        rotate([0,-90,0]) cylinder(h=l_,d=0.01);
+    translate([0,0,ft_mh+2*eps])
+        rotate([0,-90,0]) cylinder(h=l_,d=0.01);
+    
+    translate([0,d_-ft_ud/2,0])
+        rotate([0,-90,0]) cylinder(h=l_,d=0.01);
+    translate([0,d_,ft_mh+2*eps])
+        rotate([0,-90,0]) cylinder(h=l_,d=0.01);
+    //translate([]) rotate([0,-90,0]) cylinder(h=x,d=0.01);
+}
+*/
 module door()
 {
     x = n_cols*g_l - 2*tol;
