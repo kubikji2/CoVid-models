@@ -27,6 +27,8 @@ b_h = 2.5;
 // lock offset
 l_off = 12;
 
+w_t = 2;
+
 module frame()
 {
     // main inner frame
@@ -44,11 +46,42 @@ module frame()
             round_cube(x=b_x-2*b_t,y=b_y-2*b_t,z=b_h+2*eps,d=2);
     }
     
-    translate([(b_x-x_i)/2,15,0]) cylinder(d=d_i,h=b_z);
-    translate([b_x-(b_x-x_i)/2,15,0]) cylinder(d=d_i,h=b_z);
-    translate([(b_x-x_i)/2,b_y-15,0]) cylinder(d=d_i,h=b_z);
-    translate([b_x-(b_x-x_i)/2,b_y-15,0]) cylinder(d=d_i,h=b_z);
+    translate([(b_x-x_i)/2,l_off,0]) cylinder(d=d_i,h=b_z);
+    translate([b_x-(b_x-x_i)/2,l_off,0]) cylinder(d=d_i,h=b_z);
+    translate([(b_x-x_i)/2,b_y-l_off,0]) cylinder(d=d_i,h=b_z);
+    translate([b_x-(b_x-x_i)/2,b_y-l_off,0]) cylinder(d=d_i,h=b_z);
     
 }
 
-frame();
+//frame();
+
+module side_frame()
+{
+    difference()
+    {
+        translate([0,-h_y/2,0])
+            cube([2*h_t,h_y,w_t+h_t]);
+        translate([-eps,-h_y/2-eps,-eps])
+            cube([h_t,h_y+2*eps,h_h]);
+    }
+    
+    translate([h_t,-b_y/2,0])
+        round_cube(x=b_x/2-10,y=b_y,z=b_h,d=4);
+}
+
+//side_frame();
+
+module advanced_frame()
+{
+    // basic frame
+    frame();
+    
+    // left frame
+    translate([0,b_y/2,0]) rotate([0,0,180])
+        side_frame();
+    
+    // right frame
+    translate([b_x,b_y/2,0]) side_frame();
+}
+
+advanced_frame();
