@@ -30,6 +30,7 @@ module ftsr()
     x = n_cols*g_l + 2*w_t;
     y = 2*n_rows*g_l + 2*w_t;
     z = g_t + ft_mh + b_h;
+    off = ft_ud;
     
     difference()
     {
@@ -41,7 +42,7 @@ module ftsr()
             
             // main door block
             d_x = x;
-            d_y = 2*w_t+2*tol;
+            d_y = 4*w_t+2*tol;
             d_z = z;
             translate([0,y,0]) difference()
             {
@@ -59,7 +60,6 @@ module ftsr()
         {
             l_ = x-2*w_t;
             d_ = y-2*w_t;
-            off = ft_ud;
             
             translate([0,off,0])
                 rotate([0,-90,0]) cylinder(h=l_,d=0.01);
@@ -70,8 +70,8 @@ module ftsr()
                 rotate([0,-90,0]) cylinder(h=l_,d=0.01);
             translate([0,d_,ft_mh-ft_h+b_h+2*eps])
                 rotate([0,-90,0]) cylinder(h=l_,d=0.01);
-            //translate([]) rotate([0,-90,0]) cylinder(h=x,d=0.01);
         }
+        
         // cut for tips to fall in
         for(i=[0:n_cols-1])
         {
@@ -81,7 +81,7 @@ module ftsr()
             translate([lp_x,0,-eps]) hull()
             {
                 translate([0,lp_y,0]) cylinder(d=ft_sd,h=g_t+2*eps);
-                translate([0,y+2*w_t+2*tol,0]) cylinder(d=ft_sd,h=g_t+2*eps);
+                translate([0,y+4*w_t+2*tol,0]) cylinder(d=ft_sd,h=g_t+2*eps);
             }
             
             // upper cut
@@ -89,7 +89,7 @@ module ftsr()
             {
                 translate([0,lp_y,0])
                     cylinder(d=ft_ud,h=ft_mh+2*eps);
-                translate([0,y+2*w_t+2*tol,0])
+                translate([0,y+4*w_t+2*tol,0])
                     cylinder(d=ft_ud,h=ft_mh+2*eps);
             }
         }
