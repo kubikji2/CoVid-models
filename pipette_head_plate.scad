@@ -11,22 +11,61 @@ n_ch = 8;
 p_l = 9;
 p_d = 6;
 p_z = 1;
-p_x = n_ch*p_l;
+p_x = n_ch*p_l+3;
 p_y = p_l+3;
+
+// rubber hook parameters
+// wall thickness
+rh_wt = 1.5;
+rh_D = 2;
+rh_d = 1;
+rh_h = 3+rh_D;
 
 module pipette_head_plate()
 {
     difference()
-    {
-        round_cube(x=p_x,y=p_y,z=p_z,d=10);
+    {        
+        // main geometry
+        round_cube(x=p_x,y=p_y,z=p_z+rh_h,d=10);
         
+        // workspace hole
+        translate([rh_wt,-eps,p_z])
+            round_cube(x=p_x-2*rh_wt,y=p_y+2*eps,z=rh_h+2*eps,d=10);
+          
+        // holes for pipette tips
+        x_off = (p_x-n_ch*p_l)/2;
+        ho_y = p_l/2+1.5;
         for(i=[0:n_ch-1])
         {
-            ho_x = p_l/2+i*p_l;
-            ho_y = p_l/2+1.5;
+            ho_x = x_off+p_l/2+i*p_l;
             translate([ho_x,ho_y,-eps])
             cylinder(h=p_z+2*eps, d=p_d);
         }
+        
+        // rubber holes
+        _a = 60;
+        // left holes
+        translate([x_off+p_l/2,ho_y,p_z+rh_h-rh_D])
+            rotate([0,0,_a])
+                translate([-rh_d/2,-rh_d/2,0])
+                    cube([rh_d,p_x,rh_D+2*eps]);
+        translate([x_off+p_l/2,ho_y,p_z+rh_h-rh_D])
+            rotate([0,0,180-_a])
+                translate([-rh_d/2,-rh_d/2,0])
+                    cube([rh_d,p_x,rh_D+2*eps]);
+        // right holes
+        translate([p_x-x_off-p_l/2,ho_y,p_z+rh_h-rh_D])
+            rotate([0,0,180+_a])
+                translate([-rh_d/2,-rh_d/2,0])
+                    cube([rh_d,p_x,rh_D+2*eps]);
+        translate([p_x-x_off-p_l/2,ho_y,p_z+rh_h-rh_D])
+            rotate([0,0,-_a])
+                translate([-rh_d/2,-rh_d/2,0])
+                    cube([rh_d,p_x,rh_D+2*eps]);
+                    
+        // rubber secure peak
+        translate([rh_wt-0.5,(p_y-p_d)/2,p_z+rh_h-rh_D+eps])
+            cube([p_x-1,p_d,1]);
         
     }
 }
