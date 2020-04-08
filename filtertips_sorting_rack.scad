@@ -17,7 +17,7 @@ ft_mh = 28;
 n_rows = 8;
 n_cols = 12;
 // thickness of the grid
-g_t = 1;
+g_t = 3;
 // distance between centers
 g_l = 9;
 // horder height
@@ -25,10 +25,14 @@ b_h = 3;
 // general parameters
 w_t = 2;
 
+// door paramteres
+// door support thickness
+d_s = 4;
+
 module ftsr()
 {
     x = n_cols*g_l + 2*w_t;
-    y = 2*n_rows*g_l + 2*w_t;
+    y = 2*n_rows*g_l + w_t+d_s;
     z = g_t + ft_mh + b_h;
     off = ft_ud;
     
@@ -59,7 +63,7 @@ module ftsr()
         hull()
         {
             l_ = x-2*w_t;
-            d_ = y-2*w_t;
+            d_ = y-w_t-d_s;
             
             translate([0,off,0])
                 rotate([0,-90,0]) cylinder(h=l_,d=0.01);
@@ -101,7 +105,7 @@ module ftsr()
     
 }
 
-//ftsr();
+ftsr();
 
 module door()
 {
@@ -112,5 +116,5 @@ module door()
     rotate([-90,0,0]) cube([x,y,z]);
 }
 
-door();
+//door();
 
