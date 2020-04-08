@@ -18,7 +18,7 @@ p_y = p_l+3;
 // wall thickness
 rh_wt = 1.5;
 rh_D = 2;
-rh_d = 1;
+rh_d = 2;
 rh_h = 3+rh_D;
 
 module pipette_head_plate()
@@ -26,11 +26,16 @@ module pipette_head_plate()
     difference()
     {        
         // main geometry
-        round_cube(x=p_x,y=p_y,z=p_z+rh_h,d=10);
+        union()
+        {
+            round_cube(x=p_x,y=p_y,z=p_z+rh_h,d=10);
+            translate([-rh_wt,0,rh_h-rh_D])
+                round_cube(x=p_x+2*rh_wt, y=p_y,z=rh_h-rh_D);
+        }
         
         // workspace hole
-        translate([rh_wt,-eps,p_z])
-            round_cube(x=p_x-2*rh_wt,y=p_y+2*eps,z=rh_h+2*eps,d=10);
+        #translate([rh_wt,rh_wt,p_z])
+            round_cube(x=p_x-2*rh_wt,y=p_y-2*rh_wt,z=rh_h+2*eps,d=9);
           
         // holes for pipette tips
         x_off = (p_x-n_ch*p_l)/2;
@@ -65,7 +70,7 @@ module pipette_head_plate()
                     
         // rubber secure peak
         translate([rh_wt-0.5,(p_y-p_d)/2,p_z+rh_h-rh_D+eps])
-            cube([p_x-1,p_d,1]);
+            cube([p_x-2*rh_wt+1,p_d,1]);
         
     }
 }
