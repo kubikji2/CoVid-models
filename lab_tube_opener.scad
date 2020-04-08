@@ -3,25 +3,38 @@ eps = 0.01;
 tol = 0.25;
 
 // test tube parameters
+// handle part height
 h = 10;
+// diamter of the test tube
 d = 18.5;
-w_t = 5;
-D = 2*w_t+d;
-H = 13;
+// wall thickness for the middle part (test tube holder)
+w_T = 5;
+// middle part (test tube holder) diameter
+D = 2*w_T+d;
+// distance from the test tube hole to the bottom of the model
+H = 13+5;
+// depth of the testube hole
 h_i = 5;
+// cone base diameter
 d_i = 2;
 
 // lever parameters
-l_h = 8;
-l_d = 15;
+//l_h = 18;
+l_d = 17;
 l_l = 50;
-l_t = 2;
+l_t = 3;
 
 // pusher parameters
 p_d = 8;
 p_D = 10;
 p_t = 2;
 p_l = 22+H-h_i;
+
+// finger protective shield parameters
+// protective shield wall thickness
+w_t = 1;
+// height of the protective wall
+ps_h = 5;
 
 module lab_tube_opener()
 {
@@ -33,7 +46,7 @@ module lab_tube_opener()
             // main inner part
             cylinder(d=D,h=H);
             
-            // leverage
+            // handling leverage
             hull()
             {
                 cylinder(d=D,h=h);
@@ -47,7 +60,7 @@ module lab_tube_opener()
         translate([0, 0, H-h_i-eps])
             cylinder(h=h_i+2*eps,d=d);
         
-        // main hole for the middle part
+        // main hole for the pusher (middle part)
         translate([0,0,-eps])
             cylinder(d=p_d+2*tol,h=p_l);
         translate([0,0,-eps])
@@ -55,7 +68,7 @@ module lab_tube_opener()
         translate([0,0,p_t-eps])
             cylinder(d2=p_d+2*tol, d1=p_D+2*tol, h=p_D-p_d);
         
-        // left hole in lever
+        // left hole in lever for better grip
         translate([-l_l/2,0,-eps])
         {
             cylinder(d=l_d-4*l_t,h=h+2*eps);
@@ -64,7 +77,7 @@ module lab_tube_opener()
                 cylinder(d1=l_d-4*l_t, d2=l_d-2*l_t, h=l_t);
         }
         
-        // right hole in lever
+        // right hole in lever for better grip
         translate([l_l/2,0,-eps])
         {
             cylinder(d=l_d-4*l_t,h=h+2*eps);
@@ -74,16 +87,13 @@ module lab_tube_opener()
         }
     }
     
-    // inner curves
-    
+    // inner teeth for better friction
     translate([0,0,H-h_i])
     for(i=[1:60])
     {
         rotate([0,0,i*6]) translate([d/2,0,0])
             cylinder(d2=d_i/2,d1=d_i,h=h_i);
-    }
-    
-    
+    }    
     
     // inner pusher
     cylinder(d=p_d,h=p_l);
@@ -96,6 +106,15 @@ module lab_tube_opener()
     translate([0,0,p_l-p_t-(p_D-p_d)])
         cylinder(d1=p_d, d2=p_D, h=p_D-p_d);
     
+    
+    // finger protective shielding
+    translate([0,0,H]) difference()
+    {
+        cylinder(d=D,h=ps_h);
+        translate([0,0,-eps]) cylinder(d=D-2*w_t,h=ps_h+2*eps);
+        translate([0,D/2+tol,D/2-2]) rotate([90,0,0])
+            cylinder(d=D,h=D+2*tol);
+    }
 
     
 }
