@@ -195,7 +195,7 @@ module leg()
     }
 }
 
-# leg();
+//# leg();
 
 module leg_holder()
 {
@@ -213,21 +213,21 @@ module leg_holder()
             // left hoder
             cylinder(d=0.01, h = _h);
             translate([_t,0,0]) cylinder(d=0.01, h = _H);
-            translate([0,_t,0]) cylinder(d=0.01, h = _H);
+            translate([0,_t+t_tol,0]) cylinder(d=0.01, h = _H);
                 
             // right hoder
             translate([3*_t,0,0]) hull()
             {
                 cylinder(d=0.01, h = _H);
                 translate([_t,0,0]) cylinder(d=0.01, h = _h);
-                translate([_t,_t,0]) cylinder(d=0.01, h = _H);
+                translate([_t,_t+t_tol,0]) cylinder(d=0.01, h = _H);
             }
         }
         
         // hole
         // back hole part
         translate([_t/2-t_tol,_t/2-t_tol-eps,-eps])
-            cube([3*_t+2*t_tol,_t/2+t_tol+2*eps,2*_t+t_tol+2*eps]);
+            cube([3*_t+2*t_tol,_t/2+2*t_tol+2*eps,2*_t+t_tol+2*eps]);
         // front hole part
         translate([_t-t_tol,-t_tol,-eps])
             cube([2*_t+2*t_tol, _t/2+t_tol+2*eps,2*_t+t_tol+2*eps]);
@@ -235,5 +235,5 @@ module leg_holder()
     }
 }
 
-translate([-(g_l-ft_sd+t_tol)/2,0,2*(g_l-ft_sd+t_tol)])
-leg_holder();
+//translate([-(g_l-ft_sd+t_tol)/2,0,2*(g_l-ft_sd+t_tol)])
+//leg_holder();
