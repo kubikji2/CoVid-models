@@ -63,24 +63,23 @@ Models for 3D printing for project Robots4Motol and various lab-ware tinkering.
 
 ### OpenTrons hardware
  - **Pipette Head Plate**
-   - Additional plate used for OpenTrons pipette head
-   - Significantly improve relasing of filter tips
+   - An additional plate used for OpenTrons pipette head
+   - Significantly improves the releasing of filter tips
    - Rubberbands (diameter between 6 and 10 cm) are used for locking it in place
-   - Only temporary solution
+   - Only a temporary solution
   
 - **Rack Holder**
-   - Custom made filtertips rack holder
+   - Custom made filter tips rack holder
    - Lower interface: standard 96well plate dimensions (128x86 mm) with the _OpenTrons_ borders.
    - Upper interface: _Biosphere Filter Tips 200ul extra long_
-   - Serve also as adapter between standard dimension and
 
 ### Various Custom Hardware
  - **Test Tube Opener**
    - Custom test tube opener developed for Hospital Na Bulovce in Prague to make sample processing easier.
-   - [FL Medical Sterille test tube](https://www.flmedical.com/test-tubes/test-tubes-with-cap/) used for develepement, but any toher type of test tubes can be used.
+   - [FL Medical Sterile test tube](https://www.flmedical.com/test-tubes/test-tubes-with-cap/) used for development, but any other type of test tubes can be used.
 
- - **Filtertips Sorting Rack**
-   - Rack used for easier sorting and storing filter tips
+ - **Filter tips Sorting Rack**
+   - The rack used for easier sorting and storing filter tips
    - Based on [Pipet tip sorting device 'Elster' for 10 µL pipet tips](https://www.thingiverse.com/thing:4256563) by [AM LN](https://www.thingiverse.com/Easylabsolutions/about), but different pipette tips used.
    - Designed for Charles University in Prague.
 
