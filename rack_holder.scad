@@ -18,7 +18,7 @@ h_t = 4.5;
 // box parameters
 d_i = 1;
 x_i = 120;
-y_i = 82.5;
+y_i = 83.5;
 // border thickness
 b_t = 10;
 // border height
@@ -81,6 +81,9 @@ module side_frame()
         translate([w_t,0,w_t]) rotate([90,0,0])
             cylinder(d=d_, h=h_y);
     }
+    // levarage support
+    translate([0,-h_y/2,h_t+w_t])
+        cube([h_t+w_l+w_t,h_y,b_z-h_t-w_t]);
     
 }
 
