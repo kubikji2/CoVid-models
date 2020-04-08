@@ -1,3 +1,5 @@
+use<round_corners.scad>;
+
 // general parameters
 $fn = 90;
 eps = 0.01;
@@ -28,6 +30,9 @@ w_t = 2;
 // door paramteres
 // door support thickness
 d_s = 4;
+
+// comb parameters
+
 
 module ftsr()
 {
@@ -105,7 +110,7 @@ module ftsr()
     
 }
 
-ftsr();
+//ftsr();
 
 module door()
 {
@@ -118,3 +123,41 @@ module door()
 
 //door();
 
+
+module comb()
+{
+    
+    // comb parameters
+    _c_d = 10;
+    _x = (n_rows-1)*g_l+_c_d + ft_sd;
+    _y = 15;
+    _z = g_l-ft_sd;
+    
+    // middle part
+    round_cube(x=_x,y=_y,z=_z, d=_c_d);
+    
+    // comb teeth
+    for(i=[0:n_rows-2])
+    {
+        // tooth body
+        _x_o = ft_sd + _c_d/2 + i*g_l;
+        _y_o = _y;
+        _x = g_l-ft_sd;
+        _y = (n_cols+i)*g_l;
+        _z = _x;
+        translate([_x_o,_y_o,0]) cube([_x,_y,_z]);
+                    
+        // enamel
+        translate([_x_o,_y_o+_y,0])
+        hull()
+        {
+            cylinder(d=0.01,h=_z);
+            translate([_x,0,0]) cylinder(d=0.01,h=_z);
+            translate([_x,2*_x,0]) cylinder(d=0.01,h=_z);
+        }
+            
+    }
+    
+}
+
+comb();
