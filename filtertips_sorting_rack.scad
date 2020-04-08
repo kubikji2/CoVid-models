@@ -160,4 +160,38 @@ module comb()
     
 }
 
-comb();
+//comb();
+
+module leg()
+{
+    // single main parameter
+    _t = g_l-ft_sd+0.1;
+    
+    // lower third
+    cube([3*_t,_t,_t]);
+    
+    // left col
+    translate([_t/2,_t/2,_t])
+        cylinder(h=_t,d=_t);
+    translate([0,0,_t])
+        cube([_t/2,_t,_t]);
+    // right col
+    translate([2.5*_t,_t/2,_t])
+        cylinder(h=_t,d=_t);
+    translate([2.5*_t,0,_t])
+        cube([_t/2,_t,_t]);
+    // upper part
+    translate([0,0,2*_t]) difference()
+    {
+        cube([3*_t,_t,2*_t]);
+        // left cut
+        translate([-eps,-eps,-eps])
+            cube([_t/2+eps,_t/2+eps,2*_t+2*eps]);
+        // right cut
+        translate([2.5*_t+eps,-eps,-eps])
+            cube([_t/2+eps,_t/2+eps,2*_t+2*eps]);
+
+    }
+}
+
+//leg();
