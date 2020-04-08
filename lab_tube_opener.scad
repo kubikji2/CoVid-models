@@ -47,7 +47,26 @@ module lab_tube_opener()
             cylinder(d=D,h=H);
             
             // handling leverage
-            hull()
+            minkowski()
+            {
+                m_d = 5;
+                _D = D-m_d;
+                _h = h-m_d;
+                _l_d = l_d-m_d;
+                sphere(d=m_d);
+                
+                translate([0,0,m_d/2])
+                hull()
+                {
+                    #cylinder(d=D,h=_h);
+                    translate([-l_l/2,0,0])
+                        cylinder(d=_l_d,h=_h);
+                    translate([l_l/2,0,0])
+                        cylinder(d=_l_d,h=_h);
+                }
+            }
+            /*
+            %hull()
             {
                 cylinder(d=D,h=h);
                 translate([-l_l/2,0,0])
@@ -55,6 +74,7 @@ module lab_tube_opener()
                 translate([l_l/2,0,0])
                     cylinder(d=l_d,h=h);
             }
+            */
         }
         // test tube hole
         translate([0, 0, H-h_i-eps])
