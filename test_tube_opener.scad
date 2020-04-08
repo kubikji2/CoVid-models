@@ -39,7 +39,7 @@ w_t = 1;
 ps_h = 5;
 
 
-module lab_tube_opener()
+module test_tube_opener()
 {
     difference()
     {
@@ -68,16 +68,6 @@ module lab_tube_opener()
                         cylinder(d=_l_d,h=_h);
                 }
             }
-            /*
-            %hull()
-            {
-                cylinder(d=D,h=h);
-                translate([-l_l/2,0,0])
-                    cylinder(d=l_d,h=h);
-                translate([l_l/2,0,0])
-                    cylinder(d=l_d,h=h);
-            }
-            */
         }
         // test tube hole
         translate([0, 0, H-h_i-eps])
@@ -110,7 +100,7 @@ module lab_tube_opener()
         }
         
         // texts
-        translate([0,0,-eps]) arch_text(" JIŘÍ KUBÍK ",
+        translate([0,0,-eps]) arch_text(" JIRI KUBIK ",
             size=2.5, r=9, t=1, inv=true,
             font="Arial:style=Bold");
         translate([0,0,-eps]) inv_arch_text(" FEE CTU ",
@@ -149,4 +139,4 @@ module lab_tube_opener()
     }    
 }
 
-lab_tube_opener();
+test_tube_opener();
