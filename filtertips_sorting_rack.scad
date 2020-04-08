@@ -101,16 +101,16 @@ module ftsr()
     
 }
 
-ftsr();
+//ftsr();
 
 module door()
 {
-    x = n_cols*g_l - 2*tol;
+    x = n_cols*g_l - 4*tol;
     y = w_t;
     z = ft_mh + b_h;
     
     rotate([-90,0,0]) cube([x,y,z]);
 }
 
-//door();
+door();
 
