@@ -3,16 +3,19 @@
 Models for 3D printing for project Robots4Motol and various lab-ware tinkering.
 - All stls, 3mfs and gcodes are ignored
 
-# Used Libraries
-- single OpenScad library required and provided - `round_corners.scad.`
 
-# Repository Structure and Model Versions
+## Used Libraries
+- two OpenScad library required and provided - `round_corners.scad` and `round_text.scad`.
+
+
+## Repository Structure and Model Versions
 - Two main series developed: _96well serie_ and its ancestor serie _kvant96 serie_.
 - A 96well serie is abandoned due to design flaws, printing time and different filter tips currently used.
 - kvant96 serie is currently deployed and maintained
 - all printing time is estimated based on experimental 0.35mm profile in PrusaSlicer for 0.4mm nozzle PrusaMK3S printer (see PrusaSlicer profiles folder).
 
-## 96well Serie
+
+### 96well Serie
 - abandoned
 - the lower part is [Eppendorf  96 well](https://www.eppendorf.com/product-media/doc/en/105601_Marketing-Manual/Eppendorf_Consumables_Technical-data_Deepwell-Plate-96-2000_Eppendorf-Deepwell-Plate-96-2000-uL.pdf)
 - the upper part is designed for _Biosphere FilterTips 200 ul extralong_
@@ -29,7 +32,8 @@ Models for 3D printing for project Robots4Motol and various lab-ware tinkering.
     - a direct descendant of the original design with cylindric shafts
     - durable and robust design (no slicing done, 96well series abandoned)
 
-## Kvant96 Serie
+
+### Kvant96 Serie
    - currently deployed
    - used in OpenTrons design with 
    - lower part remains same; [eppensdorf 96 well](https://www.eppendorf.com/product-media/doc/en/105601_Marketing-Manual/Eppendorf_Consumables_Technical-data_Deepwell-Plate-96-2000_Eppendorf-Deepwell-Plate-96-2000-uL.pdf)
@@ -47,7 +51,8 @@ Models for 3D printing for project Robots4Motol and various lab-ware tinkering.
       - connecting part used for holding Eppendorf 96 well and the top part of Biosphere FilterTips (yellow part)
       - very compact and fast to print design (about 40 minutes)
 
-## Biomek Serie
+
+### Biomek Serie
  - Reversed engineered labware serie compatible with Biomek
  - **Biomek Baths-holder**
    - basic bath holder for four Biomek (automated laboratory workstation) 100 ml baths
@@ -55,4 +60,32 @@ Models for 3D printing for project Robots4Motol and various lab-ware tinkering.
 -  **Biomek Baths-holder -- lightweight**
    - improved bath holder for four Biomek (automated laboratory workstation) 100 ml baths
    - printing time about one hour and a half
+
+### OpenTrons hardware
+ - **Pipette Head Plate**
+   - Additional plate used for OpenTrons pipette head
+   - Significantly improve relasing of filter tips
+   - Rubberbands (diameter between 6 and 10 cm) are used for locking it in place
+   - Only temporary solution
+  
+- **Rack Holder**
+   - Custom made filtertips rack holder
+   - Lower interface: standard 96well plate dimensions (128x86 mm) with the _OpenTrons_ borders.
+   - Upper interface: _Biosphere Filter Tips 200ul extra long_
+   - Serve also as adapter between standard dimension and
+
+### Various Custom Hardware
+ - **Test Tube Opener**
+   - Custom test tube opener developed for Hospital Na Bulovce in Prague to make sample processing easier.
+   - [FL Medical Sterille test tube](https://www.flmedical.com/test-tubes/test-tubes-with-cap/) used for develepement, but any toher type of test tubes can be used.
+
+ - **Filtertips Sorting Rack**
+   - Rack used for easier sorting and storing filter tips
+   - Based on [Pipet tip sorting device 'Elster' for 10 µL pipet tips](https://www.thingiverse.com/thing:4256563) by [AM LN](https://www.thingiverse.com/Easylabsolutions/about), but different pipette tips used.
+   - Designed for Charles University in Prague.
+
+  
+
+
+
 
