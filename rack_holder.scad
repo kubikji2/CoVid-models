@@ -18,7 +18,7 @@ h_t = 4.5;
 // box parameters
 d_i = 1;
 x_i = 120;
-y_i = 83;
+y_i = 82.5;
 // border thickness
 b_t = 10;
 // border height
@@ -26,8 +26,10 @@ b_h = 2.5;
 
 // lock offset
 l_off = 12;
-
 w_t = 2;
+
+// wing parameters
+w_l = 10;
 
 module frame()
 {
@@ -59,14 +61,27 @@ module side_frame()
 {
     difference()
     {
+        // main shape for lock
         translate([0,-h_y/2,0])
-            cube([2*h_t,h_y,w_t+h_t]);
+            cube([h_t+w_l,h_y,w_t+h_t]);
+        // cut for outer frame
         translate([-eps,-h_y/2-eps,-eps])
             cube([h_t,h_y+2*eps,h_h]);
     }
-    
+    // lower wings
     translate([h_t,-b_y/2,0])
-        round_cube(x=b_x/2-10,y=b_y,z=b_h,d=4);
+        round_cube(x=w_l,y=b_y,z=b_h,d=4);
+    // leverage
+    translate([h_t+w_l-eps,h_y/2,h_t]) hull()
+    {
+        d_ = 0.01;
+        rotate([90,0,0]) cylinder(d=d_, h=h_y);
+        translate([0,0,w_t]) rotate([90,0,0])
+            cylinder(d=d_, h=h_y);
+        translate([w_t,0,w_t]) rotate([90,0,0])
+            cylinder(d=d_, h=h_y);
+    }
+    
 }
 
 //side_frame();
