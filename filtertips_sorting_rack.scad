@@ -4,6 +4,7 @@ use<round_corners.scad>;
 $fn = 90;
 eps = 0.01;
 tol = 0.5;
+t_tol = 0.1;
 
 // filter tips parameters
 // stop diameter
@@ -165,7 +166,7 @@ module comb()
 module leg()
 {
     // single main parameter
-    _t = g_l-ft_sd+0.1;
+    _t = g_l-ft_sd+t_tol;
     
     // lower third
     cube([3*_t,_t,_t]);
@@ -194,4 +195,45 @@ module leg()
     }
 }
 
-//leg();
+# leg();
+
+module leg_holder()
+{
+    // single main parameter
+    _t = g_l-ft_sd+t_tol;
+    //
+    _h = 2*_t;
+    _H = 3*_t;
+    
+    difference()
+    {
+        // main shape
+        hull()
+        {
+            // left hoder
+            cylinder(d=0.01, h = _h);
+            translate([_t,0,0]) cylinder(d=0.01, h = _H);
+            translate([0,_t,0]) cylinder(d=0.01, h = _H);
+                
+            // right hoder
+            translate([3*_t,0,0]) hull()
+            {
+                cylinder(d=0.01, h = _H);
+                translate([_t,0,0]) cylinder(d=0.01, h = _h);
+                translate([_t,_t,0]) cylinder(d=0.01, h = _H);
+            }
+        }
+        
+        // hole
+        // back hole part
+        translate([_t/2-t_tol,_t/2-t_tol-eps,-eps])
+            cube([3*_t+2*t_tol,_t/2+t_tol+2*eps,2*_t+t_tol+2*eps]);
+        // front hole part
+        translate([_t-t_tol,-t_tol,-eps])
+            cube([2*_t+2*t_tol, _t/2+t_tol+2*eps,2*_t+t_tol+2*eps]);
+        
+    }
+}
+
+translate([-(g_l-ft_sd+t_tol)/2,0,2*(g_l-ft_sd+t_tol)])
+leg_holder();
