@@ -1,3 +1,5 @@
+use<round_text.scad>;
+
 $fn = 90;
 eps = 0.01;
 tol = 0.25;
@@ -28,13 +30,14 @@ l_t = 3;
 p_d = 8;
 p_D = 10;
 p_t = 2;
-p_l = 22+H-h_i;
+p_l = 24+H-h_i;
 
 // finger protective shield parameters
 // protective shield wall thickness
 w_t = 1;
 // height of the protective wall
 ps_h = 5;
+
 
 module lab_tube_opener()
 {
@@ -58,7 +61,7 @@ module lab_tube_opener()
                 translate([0,0,m_d/2])
                 hull()
                 {
-                    #cylinder(d=D,h=_h);
+                    cylinder(d=D,h=_h);
                     translate([-l_l/2,0,0])
                         cylinder(d=_l_d,h=_h);
                     translate([l_l/2,0,0])
@@ -105,6 +108,15 @@ module lab_tube_opener()
             translate([0,0,h-l_t+2*eps])
                 cylinder(d1=l_d-4*l_t, d2=l_d-2*l_t, h=l_t);
         }
+        
+        // texts
+        translate([0,0,-eps]) arch_text(" JIŘÍ KUBÍK ",
+            size=2.5, r=9, t=1, inv=true,
+            font="Arial:style=Bold");
+        translate([0,0,-eps]) inv_arch_text(" FEE CTU ",
+            size=3, r=8, t=1, inv=true,
+            font="Arial:style=Bold");
+        
     }
     
     // inner teeth for better friction
@@ -134,9 +146,7 @@ module lab_tube_opener()
         translate([0,0,-eps]) cylinder(d=D-2*w_t,h=ps_h+2*eps);
         translate([0,D/2+tol,D/2-2]) rotate([90,0,0])
             cylinder(d=D,h=D+2*tol);
-    }
-
-    
+    }    
 }
 
 lab_tube_opener();
