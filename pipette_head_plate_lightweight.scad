@@ -21,8 +21,10 @@ p_bo = 3;
 //dimension
 p_x = n_ch*g_l+p_bo;
 p_y = g_l +p_bo;
+//p_b = 0.5;
+//p_bd = [1.5,1,0,0,0,0,1,1.5];
 p_b = 0.75;
-p_bd = [1,0.5,0.25,0,0,0.25,0.5,1];
+p_bd = [0.25,0,0,0,0,0,0,0.25];
 p_h = 3;
 p_z = p_b+p_h;
 // conicity of the inner cut
@@ -74,8 +76,8 @@ module pipette_head_plate()
             for(i=[0:n_ch-1])
             {
                 ho_x = x_off+g_l/2+i*g_l;
-                translate([-g_l/2+ho_x,-g_l/2+ho_y,p_b])
-                    cube([g_l,g_l,p_bd[i]]);
+                translate([ho_x,ho_y,p_b])
+                    cylinder(d=g_l-eps, h=p_bd[i]);
             }
             
             /*
