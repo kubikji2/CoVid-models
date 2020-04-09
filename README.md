@@ -1,8 +1,11 @@
 # CoVid-Models
 
 Models for 3D printing for project Robots4Motol and various lab-ware tinkering.
-- All stls, 3mfs and gcodes are ignored
-
+- Only [OpenSCAD](https://www.openscad.org/) source files are being tracked.
+- Openscad is available for all main operating system (Windows, various Linux/Unix and MacOS) for FREE
+- Enables easy parameters modification.
+- **If you are not able to get install OpenSCAD for any reason, just write me an email (jiri.kub@gmail.com).**
+- Several models are also published on [Thingiverse](https://www.thingiverse.com/) on my [Thingiverse profile](https://www.thingiverse.com/Kvant/about).
 
 ## Used Libraries
 - two OpenScad library required and provided - `round_corners.scad` and `round_text.scad`.
