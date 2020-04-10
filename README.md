@@ -60,9 +60,10 @@ Models for 3D printing for project Robots4Motol and various lab-ware tinkering.
  - **Biomek Baths-holder**
    - basic bath holder for four Biomek (automated laboratory workstation) 100 ml baths
    - printing time about two hours
--  **Biomek Baths-holder -- lightweight**
+ - **Biomek Baths-holder -- lightweight**
    - improved bath holder for four Biomek (automated laboratory workstation) 100 ml baths
    - printing time about one hour and a half
+
 
 ### OpenTrons hardware
  - **Pipette Head Plate**
@@ -70,11 +71,25 @@ Models for 3D printing for project Robots4Motol and various lab-ware tinkering.
    - Significantly improves the releasing of filter tips
    - Rubberbands (diameter between 6 and 10 cm) are used for locking it in place
    - Only a temporary solution
+
+   - **Pipette Head Plate**
+     - Basic first temporal solution
+     - Obsolete design, too stiff
+   
+   - **Pipette Head Plate lightweight**
+     - Lightweight iterative solution
+     - Obsolete
+  
+   - **Opentrons Pipette Head Plate**
+     - Final solution
+     - Merge of two previous version
+     - Production design
   
 - **Rack Holder**
    - Custom made filter tips rack holder
    - Lower interface: standard 96well plate dimensions (128x86 mm) with the _OpenTrons_ borders.
    - Upper interface: _Biosphere Filter Tips 200ul extra long_
+
 
 ### Various Custom Hardware
  - **Test Tube Opener**
