@@ -45,7 +45,7 @@ bh_off = 13;
 
 // support beams
 sb_x = 2;
-sb_y = 3;
+sb_y = 4;
 sb_yo = 3;
 
 module mag_holder()
