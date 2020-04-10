@@ -4,7 +4,7 @@ Models for 3D printing for project Robots4Motol and various lab-ware tinkering.
 - Only [OpenSCAD](https://www.openscad.org/) source files are being tracked.
 - Openscad is available for all main operating system (Windows, various Linux/Unix and MacOS) for FREE
 - Enables easy parameters modification.
-- **If you are not able to get install OpenSCAD for any reason, just write me an email (jiri.kub@gmail.com).**
+- **If you are not able to install OpenSCAD for any reason, just write me an email (jiri.kub@gmail.com).**
 - Several models are also published on [Thingiverse](https://www.thingiverse.com/) on my [Thingiverse profile](https://www.thingiverse.com/Kvant/about).
 
 ## Used Libraries
