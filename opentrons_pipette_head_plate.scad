@@ -86,7 +86,8 @@ module pipette_head_plate()
         }
         
         // cutting out borders
-        translate([p_bo/2+g_l-p_D,-eps,p_b])
+        b_o = 1.5;
+        translate([p_bo/2+g_l-p_D,-eps,p_b+b_o])
             cube([p_x-p_bo-2*(g_l-p_D),p_y+2*eps,p_h+p_h+rh_h+eps]);
         
         // rubber holes
