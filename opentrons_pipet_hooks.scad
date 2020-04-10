@@ -10,7 +10,7 @@ t_tol = 0.1;
 p_d = 6.15;
 p_t = 2;
 p_h = 3;
-p_x = 80;
+p_x = 80.5;
 
 module pipet_hooks()
 {
