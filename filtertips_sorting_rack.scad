@@ -62,6 +62,7 @@ module ftsr()
                 translate([w_t,-eps,w_t+eps])
                     cube([d_x-2*w_t,w_t+2*tol+eps,z-w_t]);
             }
+            
         }
         
         // main cut
@@ -108,10 +109,61 @@ module ftsr()
     // brim cheater
     translate([0,y+2*w_t+2*tol,0]) cube([x,2*w_t,0.21]);
     
+    // legs    
+    _t = g_l-ft_sd+t_tol; 
     
+    // front legs
+    translate([0,+2*_t,0]) rotate([0,0,-90])
+    {
+        leg_holder(t=_t);
+        translate([0,0,-2*_t]) %leg(t=_t);
+    }
+    translate([x,+2*_t,0]) rotate([0,0,90])
+    {
+        leg_holder(t=_t);
+        translate([0,0,-2*_t]) %leg(t=_t);
+    }
+    
+    _off = ft_ud/2+ft_sd/2+_t/2;
+    // back legs
+    translate([0,y-_off,0]) rotate([0,0,-90])
+    {
+        leg_holder(t=_t);
+        translate([0,0,-2*_t]) %leg(t=_t);
+    }
+    translate([x,y-_off,0]) rotate([0,0,90])
+    {
+        leg_holder(t=_t);
+        translate([0,0,-2*_t]) %leg(t=_t);
+    }
+    
+    // middle legs
+    translate([0,y-_off-g_l*(n_rows-2),0]) rotate([0,0,-90])
+    {
+        leg_holder(t=_t);
+        translate([0,0,-2*_t]) %leg(t=_t);
+    }
+    
+    translate([x,y-_off-g_l*(n_rows-2),0]) rotate([0,0,90])
+    {
+        leg_holder(t=_t);
+        translate([0,0,-2*_t]) %leg(t=_t);
+    }
+    
+    // pipet tips
+    /*
+    for(i=[0:n_rows-1])
+    {
+        %translate([w_t+g_l/2,y-ft_ud/2-i*g_l,0])
+        {
+            cylinder(h=10,d=ft_ud);
+            translate([0,0,-5]) cylinder(h=10,d=ft_sd);
+        }
+    }
+    */
 }
 
-//ftsr();
+ftsr();
 
 module door()
 {
@@ -163,48 +215,54 @@ module comb()
 
 //comb();
 
-module leg()
+module leg(t)
 {
     // single main parameter
-    _t = g_l-ft_sd+t_tol;
+    //_t = g_l-ft_sd+t_tol;
+    _t = t;
+    _h = 1.5*_t;
     
-    // lower third
-    cube([3*_t,_t,_t]);
-    
-    // left col
-    translate([_t/2,_t/2,_t])
-        cylinder(h=_t,d=_t);
-    translate([0,0,_t])
-        cube([_t/2,_t,_t]);
-    // right col
-    translate([2.5*_t,_t/2,_t])
-        cylinder(h=_t,d=_t);
-    translate([2.5*_t,0,_t])
-        cube([_t/2,_t,_t]);
-    // upper part
-    translate([0,0,2*_t]) difference()
+    translate([-_h,-2*_h/3+t_tol,0])
     {
-        cube([3*_t,_t,2*_t]);
-        // left cut
-        translate([-eps,-eps,-eps])
-            cube([_t/2+eps,_t/2+eps,2*_t+2*eps]);
-        // right cut
-        translate([2.5*_t+eps,-eps,-eps])
-            cube([_t/2+eps,_t/2+eps,2*_t+2*eps]);
+        // lower third
+        cube([3*_t,_t,_t]);
+        
+        // left col
+        translate([_t/2,_t/2,_t])
+            cylinder(h=_t,d=_t);
+        translate([0,0,_t])
+            cube([_t/2,_t,_t]);
+        // right col
+        translate([2.5*_t,_t/2,_t])
+            cylinder(h=_t,d=_t);
+        translate([2.5*_t,0,_t])
+            cube([_t/2,_t,_t]);
+        // upper part
+        translate([0,0,2*_t]) difference()
+        {
+            cube([3*_t,_t,2*_t]);
+            // left cut
+            translate([-eps,-eps,-eps])
+                cube([_t/2+eps,_t/2+eps,2*_t+2*eps]);
+            // right cut
+            translate([2.5*_t+eps,-eps,-eps])
+                cube([_t/2+eps,_t/2+eps,2*_t+2*eps]);
 
+        }
     }
 }
 
-//# leg();
+// # leg(2);
 
-module leg_holder()
+module leg_holder(t)
 {
     // single main parameter
-    _t = g_l-ft_sd+t_tol;
+    //_t = g_l-ft_sd+t_tol;
+    _t = t;
     //
     _h = 2*_t;
     _H = 3*_t;
-    
+    translate([-_h,-_h/2,0])
     difference()
     {
         // main shape
@@ -234,6 +292,8 @@ module leg_holder()
         
     }
 }
+
+// leg_holder(2);
 
 //translate([-(g_l-ft_sd+t_tol)/2,0,2*(g_l-ft_sd+t_tol)])
 //leg_holder();
