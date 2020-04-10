@@ -43,6 +43,11 @@ bh_d = 4.3;
 bh_h = 23+l_extention;
 bh_off = 13;
 
+// support beams
+sb_x = 2;
+sb_y = 3;
+sb_yo = 3;
+
 module mag_holder()
 {
 
@@ -80,6 +85,7 @@ module mag_holder()
             // upper part
             translate([0,_l_yu_o,l_zl])
                 cube([l_x,l_yu,l_zu]);
+            
         }
         
         // bolt hole
@@ -97,6 +103,12 @@ module mag_holder()
         round_cube(x=h_l+h_d,y=h_d,z=b_bt,d=h_d);
     translate([b_x-h_d/2,b_y-h_d-(bc_yo-h_d),0])
         round_cube(x=h_l+h_d,y=h_d,z=b_bt,d=h_d);
+    
+    // support beams
+    translate([-sb_x,(b_y-l_yu)/2+sb_yo,0])
+        cube([sb_x,sb_y,b_z+l_zu+l_zl]);
+    translate([-sb_x,b_y -(b_y-l_yu)/2-sb_yo-sb_y,0])
+        cube([sb_x,sb_y,b_z+l_zu+l_zl]);
 
 }
 
