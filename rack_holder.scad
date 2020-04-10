@@ -46,6 +46,37 @@ module frame()
         // lower hole
         translate([b_t,b_t,-eps])
             round_cube(x=b_x-2*b_t,y=b_y-2*b_t,z=b_h+2*eps,d=2);
+        
+        // names
+        names = "Adéla, Jirka, Kuba, Petr, Petr";
+        f_size = 5.5;
+        t_yo = b_t/2;
+        translate([b_t,t_yo,b_h+eps-2])
+        linear_extrude(2)
+        {
+            // rotate on the arch
+            rotate([0,0,0]) 
+                // rotate bottom to the center
+                rotate([0,0,0])
+                    text(text=names,size=f_size,
+                    valign="center",
+                    font="Arial:style=Bold",halign="left");
+        }
+        
+        // quotes
+        quote = "S láskou pro Motol";
+        //quote = "S láskou pro Motol";
+        translate([b_t,y_i+t_yo-b_t+1.5, b_h+eps-2])
+        linear_extrude(2)
+        {
+            // rotate on the arch
+            rotate([0,0,0]) 
+                // rotate bottom to the center
+                rotate([0,0,0])
+                    text(text=quote,size=f_size,
+                    valign="center",
+                    font="Arial:style=Bold",halign="left");
+        }
     }
     
     translate([(b_x-x_i)/2,l_off,0]) cylinder(d=d_i,h=b_z);
@@ -57,7 +88,7 @@ module frame()
 
 //frame();
 
-module side_frame()
+module side_frame(txt="")
 {
     difference()
     {
@@ -81,9 +112,25 @@ module side_frame()
         translate([w_t,0,w_t]) rotate([90,0,0])
             cylinder(d=d_, h=h_y);
     }
-    // levarage support
-    translate([0,-h_y/2,h_t+w_t])
-        cube([h_t+w_l+w_t,h_y,b_z-h_t-w_t]);
+    
+    difference()
+    {
+        // levarage support 
+        translate([0,-h_y/2,h_t+w_t])
+            cube([h_t+w_l+w_t,h_y,b_z-h_t-w_t]);
+        // text
+        translate([(h_t+w_l+w_t)/2,0,h_t+w_t])
+        linear_extrude(2)
+        {
+            // rotate on the arch
+            rotate([0,0,90+180]) 
+                // rotate bottom to the center
+                rotate([0,0,0])
+                    text(text=txt,size=8,valign="center",
+                    font="Arial:style=Bold",halign="center");
+        }
+       
+    }
     
 }
 
@@ -96,10 +143,10 @@ module advanced_frame()
     
     // left frame
     translate([0,b_y/2,0]) rotate([0,0,180])
-        side_frame();
+        side_frame(txt="FEL ČVUT");
     
     // right frame
-    translate([b_x,b_y/2,0]) side_frame();
+    translate([b_x,b_y/2,0]) side_frame(txt="PřF UK");
 }
 
 advanced_frame();
