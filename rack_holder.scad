@@ -4,21 +4,21 @@ $fn = 180;
 eps =  0.01;
 tol = 0.25;
 
-// frame parameters
+// frame parameters (outer dimensions)
 b_x = 127.9;
 b_y = 86;
 b_z = 8;
 
-// holder parameters
+// holder parameters (wing parameters)
 h_x = 113.5;
 h_y = 71.5;
 h_h = 3.3;
 h_t = 4.5;
 
-// box parameters
+// box parameters (inner dimensions)
 d_i = 1;
 x_i = 120;
-y_i = 83.5;
+y_i = 84;
 // border thickness
 b_t = 10;
 // border height
