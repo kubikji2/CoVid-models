@@ -85,9 +85,8 @@ Models for 3D printing for project Robots4Motol and various lab-ware tinkering.
    - The rack used for easier sorting and storing filter tips
    - Based on [Pipet tip sorting device 'Elster' for 10 µL pipet tips](https://www.thingiverse.com/thing:4256563) by [AM LN](https://www.thingiverse.com/Easylabsolutions/about), but different pipette tips used.
    - Designed for Charles University in Prague.
+ 
 
-  
-
-
-
-
+## License
+- All provided code is licensed under [Attribution-NonCommercial-ShareAlike 4.0 International (human readable)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+- Full license can be found [here](https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode)
