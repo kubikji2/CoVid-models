@@ -49,20 +49,6 @@ module pipet_hooks()
     connector(l=p_xl,h=p_h);
     cylinder(h=p_H,d=p_d);
     translate([p_xl,0,0])cylinder(h=p_H,d=p_d);
-    // upper horizontal connector
-    /*
-    #translate([x_off,p_y,0]) difference()
-    {   
-        _t = h_w+p_t;
-        _h = p_H-h_w;
-        connector(l=p_xu,h=_h,t=_t);
-        // cutting hole for the rubber band
-        translate([p_xu/2-h_w/2,-p_d/2-eps,p_H+eps])
-            cube([h_w,p_d+2*eps,h_h+2*eps]);
-        translate([p_xu/2-1.5*h_w,-p_d/2-eps,p_H+eps-h_h])   
-            cube([3*h_w,p_d+2*eps,h_h+2*eps]);
-    }
-    */
     
     //front2back left connection
     translate([0,0,p_H])
@@ -106,7 +92,7 @@ module pipet_hooks()
     
     translate([x_off+p_xu,p_y+h2_yo,p_H-h2_h+p_t])
     {
-        // pillar
+        // pillar 
         difference()
         {
             union()
@@ -125,23 +111,6 @@ module pipet_hooks()
         
     }
     
-    
-    
-    /*
-    round_cube(x=p_x+p_d,y=p_d,z=p_t,d=p_d);
-    translate([p_d/2,p_d/2,p_t]) cylinder(d=p_d, h=p_h);
-    translate([p_x+p_d/2,p_d/2,p_t]) cylinder(d=p_d, h=p_h);
-    
-    // vertical connectors
-    translate([p_d,0,0]) rotate([0,0,90])
-        round_cube(x=p_y+p_d,y=p_d,z=p_t,d=p_d);
-    translate([p_x+p_d,0,0]) rotate([0,0,90])
-        round_cube(x=p_y+p_d,y=p_d,z=p_t,d=p_d);
-    
-    // upper connectors
-    translate([0+p_d/2,p_y+p_d/2,p_t]) cylinder(d=p_d,h=p_h); 
-    translate([p_x+p_d/2,p_y+p_d/2,p_t]) cylinder(d=p_d,h=p_h);
-    */
 }
 
 pipet_hooks();
