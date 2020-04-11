@@ -40,7 +40,9 @@ module pipet_hooks()
     // lower horizontal connector
     //connector(l=p_xl);
     // lower upper connector
-    connector(l=p_xl,h=p_H);
+    connector(l=p_xl,h=p_h);
+    cylinder(h=p_H,d=p_d);
+    translate([p_xl,0,0])cylinder(h=p_H,d=p_d);
     // upper horizontal connector
     translate([x_off,p_y,0]) difference()
     {   
