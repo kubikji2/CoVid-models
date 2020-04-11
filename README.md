@@ -66,24 +66,27 @@ Models for 3D printing for project Robots4Motol and various lab-ware tinkering.
 
 
 ### OpenTrons hardware
- - **Pipette Head Plate**
-   - An additional plate used for OpenTrons pipette head
+ - **Pipet Head Plate**
+   - An additional plate used for OpenTrons pipet head
    - Significantly improves the releasing of filter tips
    - Rubberbands (diameter between 6 and 10 cm) are used for locking it in place
    - Only a temporary solution
 
-   - **Pipette Head Plate**
+   - **Pipet Head Plate**
      - Basic first temporal solution
      - Obsolete design, too stiff
    
-   - **Pipette Head Plate lightweight**
+   - **Pipet Head Plate lightweight**
      - Lightweight iterative solution
      - Obsolete
   
-   - **Opentrons Pipette Head Plate**
+   - **Vana Pipet Head (plate)**
+     - Obsolete branch
+
+   - **Opentrons Pipet Head Plate**
      - Final solution
      - Merge of two previous version
-     - Production design
+     - Production design    
   
 - **Rack Holder**
    - Custom made filter tips rack holder
