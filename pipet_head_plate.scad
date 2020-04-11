@@ -24,7 +24,7 @@ rh_D = 2;
 rh_d = 1;
 rh_h = 4;
 
-module pipette_head_plate()
+module pipet_head_plate()
 {
     difference()
     {        
@@ -40,7 +40,7 @@ module pipette_head_plate()
         translate([rh_wt,rh_wt,p_z])
             round_cube(x=p_x-2*rh_wt,y=p_y-2*rh_wt,z=b_h+rh_h+2*eps,d=9);
           
-        // holes for pipette tips
+        // holes for pipet tips
         x_off = (p_x-n_ch*p_l)/2;
         ho_y = p_l/2+1.5;
         for(i=[0:n_ch-1])
@@ -89,6 +89,6 @@ module pipette_head_plate()
     }
 }
 
-pipette_head_plate();
+pipet_head_plate();
 
 

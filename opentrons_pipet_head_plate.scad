@@ -10,7 +10,7 @@ n_ch = 8;
 // std grid parameters
 g_l = 9;
 
-// pipette parameters
+// pipet parameters
 // diameter of the filter tips
 p_d = 6;
 // diameter of the plate corners
@@ -47,7 +47,7 @@ rh_xo = 4;
 rh_h = 4;
 
 
-module pipette_head_plate()
+module pipet_head_plate()
 {
     difference()
     {
@@ -102,7 +102,7 @@ module pipette_head_plate()
         translate([p_x+x_off-0.75*rh_a,-eps,p_b+p_h+p_b+rh_h-1.5*rh_a-eps])
             cube([rh_a,p_y+2*eps,rh_a+2*eps]);
 
-        // holes for pipette tips
+        // holes for pipet tips
         x_off = (p_x-n_ch*g_l)/2;
         ho_y = g_l/2+p_bo/2;
         for(i=[0:n_ch-1])
@@ -129,4 +129,4 @@ module pipette_head_plate()
     }
 }
 
-pipette_head_plate();
+pipet_head_plate();
