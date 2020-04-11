@@ -17,7 +17,7 @@ h_t = 4.5;
 
 // box parameters (inner dimensions)
 d_i = 1;
-x_i = 120;
+x_i = 120.5;
 y_i = 84;
 // border thickness
 b_t = 10;
@@ -47,9 +47,11 @@ module frame()
         translate([b_t,b_t,-eps])
             round_cube(x=b_x-2*b_t,y=b_y-2*b_t,z=b_h+2*eps,d=2);
         
+        
         // names
-        names = "Adéla, Jirka, Kuba, Petr, Petr";
-        f_size = 5.5;
+        //names = "Adéla, Jirka, Kuba, Petr, Petr";
+        names = "ADÉLA, JIRKA, KUBA, PETR, PETR";
+        f_size = 4.5;
         t_yo = b_t/2;
         translate([b_t,t_yo,b_h+eps-2])
         linear_extrude(2)
@@ -64,8 +66,8 @@ module frame()
         }
         
         // quotes
-        quote = "S láskou pro Motol";
-        //quote = "S láskou pro Motol";
+        //quote = "S láskou pro Motol <3";
+        quote = "S LÁSKOU PRO MOTOL ♥";
         translate([b_t,y_i+t_yo-b_t+1.5, b_h+eps-2])
         linear_extrude(2)
         {
@@ -77,6 +79,7 @@ module frame()
                     valign="center",
                     font="Arial:style=Bold",halign="left");
         }
+        
     }
     
     translate([(b_x-x_i)/2,l_off,0]) cylinder(d=d_i,h=b_z);
