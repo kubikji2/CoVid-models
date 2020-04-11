@@ -15,9 +15,15 @@ p_xl = 74.6+p_d;
 p_xu = 72.5+p_d;
 p_y = 76.2+p_d;
 
-// hook parameters
+// hooks parameters
 h_h = 2;
 h_w = 4;
+
+// secondary hooks parameters
+h2_h = 32;
+h2_yo = 6+p_d;
+h2_xo = 4;
+
 
 module connector(d=p_d,t=p_t,l=10,h=p_h)
 {
@@ -71,6 +77,49 @@ module pipet_hooks()
         cylinder(d=p_d,h=p_t);
         translate([-x_off,p_y,0]) cylinder(d=p_d,h=p_t);
     }
+    
+    // upper additional hooks
+    translate([x_off+h2_xo,p_y+h2_yo,p_H-h2_h+p_t])
+    {
+        // pillar with hook
+        difference()
+        {
+            cylinder(d=p_d,h=h2_h);
+            _h = 20;
+            translate([0,0,h2_h/2-8]) rotate([0,30,0])
+                translate([0,0,-_h/2-eps]) cube([2,4,_h]);
+        }
+        // connector
+        _t = p_t+h_w;
+        translate([0,0,h2_h-_t])
+        hull()
+        {
+            cylinder(d=p_d,h=_t);
+            translate([0,-h2_yo,0]) cylinder(d=p_d,h=_t);
+        }
+    }
+    
+    translate([x_off+p_xu-h2_xo,p_y+h2_yo,p_H-h2_h+p_t])
+    {
+        // pillar
+        difference()
+        {
+            cylinder(d=p_d,h=h2_h);
+            _h = 20;
+            translate([0,0,h2_h/2-2-10]) rotate([0,-30,0])
+                translate([0,0,-_h/2-eps]) cube([2,4,_h]);
+        }
+        // connector
+        _t = p_t+h_w;
+        translate([0,0,h2_h-_t])
+        hull()
+        {
+            cylinder(d=p_d,h=_t);
+            translate([0,-h2_yo,0]) cylinder(d=p_d,h=_t);
+        }
+    }
+    
+    
     
     /*
     round_cube(x=p_x+p_d,y=p_d,z=p_t,d=p_d);
