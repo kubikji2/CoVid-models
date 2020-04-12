@@ -37,7 +37,7 @@ d_s = 4;
 // hinge paramteres
 h_h = 12;
 h_d = 2;
-h_D = h_d + 6;
+h_D = h_d + 4;
 
 module hinge()
 {
@@ -197,7 +197,8 @@ module ftsr()
     
     // hinge
     //#rotate([0,90,0]) cylinder(h=h_h,d=h_d);
-    //translate([0,0,0]) hinge();
+    translate([0,y-w_t,z]) hinge();
+    translate([x-h_h,y-w_t,z]) hinge();
     
     // pipet tips
     /*
