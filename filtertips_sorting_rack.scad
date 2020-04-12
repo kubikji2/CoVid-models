@@ -24,7 +24,7 @@ g_t = 3;
 // distance between centers
 g_l = 9;
 // horder height
-b_h = 3;
+b_h = 6;
 // general parameters
 w_t = 2;
 
@@ -34,6 +34,47 @@ d_s = 4;
 
 // comb parameters
 
+// hinge paramteres
+h_h = 12;
+h_d = 2;
+h_D = h_d + 6;
+
+module hinge()
+{
+    rotate([-90,0,0])
+    {
+        // main
+        cube([h_h,h_D,w_t]);
+        difference()
+        {
+            union()
+            {
+                union()
+                {
+                    translate([0,0,w_t]) cube([h_h/4,h_D,h_D/2]);
+                    translate([0,h_D/2,h_D/2+w_t]) rotate([0,90,0])
+                        cylinder(h=h_h/4,d=h_D);
+                }
+                
+                translate([h_h-h_h/4,0,0])
+                union()
+                {
+                    translate([0,0,w_t]) cube([h_h/4,h_D,h_D/2]);
+                    translate([0,h_D/2,h_D/2+w_t]) rotate([0,90,0])
+                        cylinder(h=h_h/4,d=h_D);
+                }
+            }
+            
+            translate([-eps,h_D/2,h_D/2+w_t]) rotate([0,90,0])
+                cylinder(h=h_h+2*eps,d=h_d);
+            
+        }
+    }
+
+        
+}
+
+//hinge();
 
 module ftsr()
 {
@@ -50,6 +91,7 @@ module ftsr()
             cube([x,y,z]);
             // adding doors
             
+            /*
             // main door block
             d_x = x;
             d_y = 4*w_t+2*tol;
@@ -62,6 +104,7 @@ module ftsr()
                 translate([w_t,-eps,w_t+eps])
                     cube([d_x-2*w_t,w_t+2*tol+eps,z-w_t]);
             }
+            */
             
         }
         
@@ -103,11 +146,13 @@ module ftsr()
                 translate([0,y+4*w_t+2*tol,0])
                     cylinder(d=ft_ud,h=ft_mh+2*eps);
             }
+            // cut for border
+            translate([lp_x,lp_y,g_t]) cylinder(h=ft_mh+b_h,d=ft_ud);
         }
     }
     
     // brim cheater
-    translate([0,y+2*w_t+2*tol,0]) cube([x,2*w_t,0.21]);
+    translate([0,y-2*w_t,0]) cube([x,2*w_t,0.21]);
     
     // legs    
     _t = g_l-ft_sd+t_tol; 
@@ -149,6 +194,10 @@ module ftsr()
         leg_holder(t=_t);
         translate([0,0,-2*_t]) %leg(t=_t);
     }
+    
+    // hinge
+    //#rotate([0,90,0]) cylinder(h=h_h,d=h_d);
+    //translate([0,0,0]) hinge();
     
     // pipet tips
     /*
