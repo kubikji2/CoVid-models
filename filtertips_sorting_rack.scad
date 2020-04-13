@@ -3,8 +3,8 @@ use<round_corners.scad>;
 // general parameters
 $fn = 90;
 eps = 0.01;
-tol = 0.5;
-t_tol = 0.1;
+tol = 0.3;
+t_tol = 0.3;
 
 // filter tips parameters
 // stop diameter
@@ -66,15 +66,42 @@ module hinge()
             }
             
             translate([-eps,h_D/2,h_D/2+w_t]) rotate([0,90,0])
-                cylinder(h=h_h+2*eps,d=h_d);
+                cylinder(h=h_h+2*eps,d=h_d+t_tol);
             
         }
     }
-
         
 }
 
 //hinge();
+
+module hinge_inv()
+{
+    //rotate([-90,0,0])
+    {
+        // main
+        //cube([h_h,h_D,w_t]);
+        translate([h_h/4+tol,0,0])
+        difference()
+        {
+            union()
+            {
+                translate([0,h_D/2,w_t+tol/2])
+                    cube([h_h/2-2*tol,h_D/2+tol,h_D/2]);
+                translate([0,h_D/2,h_D/2+w_t]) rotate([0,90,0])
+                    cylinder(h=h_h/2-2*tol,d=h_D-tol);
+            }
+                       
+            translate([-eps,h_D/2,h_D/2+w_t]) rotate([0,90,0])
+                cylinder(h=h_h/2+2*eps-2*tol,d=h_d+0.5);
+            
+            
+            
+        }
+    }
+}
+
+//hinge_inv();
 
 module ftsr()
 {
@@ -169,7 +196,7 @@ module ftsr()
         translate([0,0,-2*_t]) %leg(t=_t);
     }
     
-    _off = ft_ud/2+ft_sd/2+_t/2;
+    _off = ft_ud/2+ft_sd/2+_t/2+tol;
     // back legs
     translate([0,y-_off,0]) rotate([0,0,-90])
     {
@@ -213,17 +240,21 @@ module ftsr()
     */
 }
 
-ftsr();
+//ftsr();
 
 module door()
 {
-    x = n_cols*g_l - 4*tol;
-    y = w_t;
+    x = n_cols*g_l+2*w_t;
+    y = h_D/2;
     z = ft_mh + b_h;
     
     rotate([-90,0,0]) cube([x,y,z]);
+    
+    translate([0,-h_D,-h_D+h_d/2-tol/2]) hinge_inv();
+    translate([x-h_h,-h_D,-h_D+h_d/2-tol/2]) hinge_inv();
 }
 
+//translate([0,n_cols*g_l+50,35]) door();
 //door();
 
 
@@ -302,7 +333,7 @@ module leg(t)
     }
 }
 
-// # leg(2);
+//leg(g_l-ft_sd+t_tol);
 
 module leg_holder(t)
 {
@@ -343,7 +374,7 @@ module leg_holder(t)
     }
 }
 
-// leg_holder(2);
+//leg_holder();
 
 //translate([-(g_l-ft_sd+t_tol)/2,0,2*(g_l-ft_sd+t_tol)])
 //leg_holder();
