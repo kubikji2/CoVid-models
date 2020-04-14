@@ -226,11 +226,13 @@ module ftsr()
 
 module door()
 {
+    _l = 0.5;
+    
     x = n_cols*g_l+2*w_t;
     y = h_D/2;
-    z = g_t + ft_mh-1-h_D;
+    z = g_t + ft_mh-_l;
+    //echo(z);
     
-    _l = 0.5;
     rotate([-90,0,0]) cube([x,y,z]);
     
     translate([0,-h_D-_l,-h_D+h_d/2-tol/2]) hinge_inv(l=_l);
@@ -260,7 +262,7 @@ module comb()
         _x_o = ft_sd + _c_d/2 + i*g_l;
         _y_o = _y;
         _x = g_l-ft_sd;
-        _y = (n_cols+i)*g_l;
+        _y = (n_cols+i)*g_l+2*w_t+2*(g_l-ft_sd);
         _z = _x;
         translate([_x_o,_y_o,0]) cube([_x,_y,_z]);
                     
