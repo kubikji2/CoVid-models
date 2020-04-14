@@ -284,7 +284,6 @@ module comb()
 module leg(t)
 {
     // single main parameter
-    //_t = g_l-ft_sd+t_tol;
     _t = t;
     _h = 1.5*_t;
     
@@ -323,7 +322,6 @@ module leg(t)
 module leg_holder(t)
 {
     // single main parameter
-    //_t = g_l-ft_sd+t_tol;
     _t = t;
     //
     _h = 2*_t;
