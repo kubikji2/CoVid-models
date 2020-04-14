@@ -57,15 +57,20 @@ Models for 3D printing for project Robots4Motol and various lab-ware tinkering.
 
 ### Biomek Serie
  - Reversed engineered labware serie compatible with Biomek
+
  - **Biomek Baths-holder**
    - basic bath holder for four Biomek (automated laboratory workstation) 100 ml baths
    - printing time about two hours
+ 
  - **Biomek Baths-holder -- lightweight**
    - improved bath holder for four Biomek (automated laboratory workstation) 100 ml baths
    - printing time about one hour and a half
 
 
 ### OpenTrons hardware
+ - Production models saved on private GDrive
+ - TODO Add final production hardware on Thingiverse.
+
  - **Pipet Head Plate**
    - An additional plate used for OpenTrons pipet head
    - Significantly improves the releasing of filter tips
@@ -79,19 +84,20 @@ Models for 3D printing for project Robots4Motol and various lab-ware tinkering.
    - **Pipet Head Plate lightweight**
      - Lightweight iterative solution
      - Obsolete
-  
+
    - **Vana Pipet Head (plate)**
      - Obsolete branch
 
    - **Opentrons Pipet Head Plate**
-     - Final solution
+     - Production name: OT-2-Alamang, rev-20200412.
+     - Final solution used in production
      - Merge of two previous version
-     - Production design    
   
-- **Rack Holder**
+ - **Rack Holder**
    - Custom made filter tips rack holder
    - Lower interface: standard 96well plate dimensions (128x86 mm) with the _OpenTrons_ borders.
    - Upper interface: _Biosphere Filter Tips 200ul extra long_
+   - Production name: OT-2-Pemegang-M, rev-20200412 (M stands for Motol hospital and reflects note to the hospital stuff)
 
 
 ### Various Custom Hardware
