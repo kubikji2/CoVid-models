@@ -75,7 +75,7 @@ module hinge()
 
 //hinge();
 
-module hinge_inv()
+module hinge_inv(l=1)
 {
     //rotate([-90,0,0])
     {
@@ -87,7 +87,7 @@ module hinge_inv()
             union()
             {
                 translate([0,h_D/2,w_t+tol/2])
-                    cube([h_h/2-2*tol,h_D/2+tol,h_D/2]);
+                    cube([h_h/2-2*tol,h_D/2+tol+l,h_D/2]);
                 translate([0,h_D/2,h_D/2+w_t]) rotate([0,90,0])
                     cylinder(h=h_h/2-2*tol,d=h_D-tol);
             }
@@ -228,16 +228,17 @@ module door()
 {
     x = n_cols*g_l+2*w_t;
     y = h_D/2;
-    z = ft_mh + b_h;
+    z = g_t + ft_mh-1-h_D;
     
+    _l = 0.5;
     rotate([-90,0,0]) cube([x,y,z]);
     
-    translate([0,-h_D,-h_D+h_d/2-tol/2]) hinge_inv();
-    translate([x-h_h,-h_D,-h_D+h_d/2-tol/2]) hinge_inv();
+    translate([0,-h_D-_l,-h_D+h_d/2-tol/2]) hinge_inv(l=_l);
+    translate([x-h_h,-h_D-_l,-h_D+h_d/2-tol/2]) hinge_inv(l=_l);
 }
 
 //translate([0,n_cols*g_l+50,35]) door();
-//door();
+door();
 
 
 module comb()
@@ -276,7 +277,7 @@ module comb()
     
 }
 
-comb();
+//comb();
 
 module leg(t)
 {
