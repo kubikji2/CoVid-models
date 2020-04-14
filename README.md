@@ -89,15 +89,17 @@ Models for 3D printing for project Robots4Motol and various lab-ware tinkering.
      - Obsolete branch
 
    - **Opentrons Pipet Head Plate**
-     - Production name: OT-2-Alamang, rev-20200412.
      - Final solution used in production
      - Merge of two previous version
+     - Production name: OT-2-Alamang, rev-20200412.
+        - Name originates from Indonesian ritual sword [Alamang](https://en.wikipedia.org/wiki/Alamang) -- I just needed sword name starting with A, as the head plate is basically blade
   
  - **Rack Holder**
    - Custom made filter tips rack holder
    - Lower interface: standard 96well plate dimensions (128x86 mm) with the _OpenTrons_ borders.
    - Upper interface: _Biosphere Filter Tips 200ul extra long_
    - Production name: OT-2-Pemegang-M, rev-20200412 (M stands for Motol hospital and reflects note to the hospital stuff)
+      - Name originates in Indonasian word for holder (same language as in case of head plate)
 
 
 ### Various Custom Hardware
