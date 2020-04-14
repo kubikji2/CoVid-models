@@ -113,27 +113,7 @@ module ftsr()
     difference()
     {
         // main shape
-        union()
-        {
-            cube([x,y,z]);
-            // adding doors
-            
-            /*
-            // main door block
-            d_x = x;
-            d_y = 4*w_t+2*tol;
-            d_z = z;
-            translate([0,y,0]) difference()
-            {
-                // main door holder
-                cube([d_x,d_y,d_z]);
-                // door hole
-                translate([w_t,-eps,w_t+eps])
-                    cube([d_x-2*w_t,w_t+2*tol+eps,z-w_t]);
-            }
-            */
-            
-        }
+        cube([x,y,z]);
         
         // main cut
         translate([x-w_t, w_t, ft_h+g_t+eps])
@@ -161,8 +141,10 @@ module ftsr()
             lp_y = w_t+g_l/2;
             translate([lp_x,0,-eps]) hull()
             {
-                translate([0,lp_y,0]) cylinder(d=ft_sd,h=g_t+2*eps);
-                translate([0,y+4*w_t+2*tol,0]) cylinder(d=ft_sd,h=g_t+2*eps);
+                translate([0,lp_y,0])
+                    cylinder(d=ft_sd,h=g_t+2*eps);
+                translate([0,y+4*w_t+2*tol,0])
+                    cylinder(d=ft_sd,h=g_t+2*eps);
             }
             
             // upper cut
@@ -174,7 +156,8 @@ module ftsr()
                     cylinder(d=ft_ud,h=ft_mh+2*eps);
             }
             // cut for border
-            translate([lp_x,lp_y,g_t]) cylinder(h=ft_mh+b_h,d=ft_ud);
+            translate([lp_x,lp_y,g_t])
+                cylinder(h=ft_mh+b_h,d=ft_ud);
         }
     }
     
@@ -182,7 +165,7 @@ module ftsr()
     translate([0,y-2*w_t,0]) cube([x,2*w_t,0.21]);
     
     // legs    
-    _t = g_l-ft_sd+t_tol; 
+    _t = g_l-ft_sd; 
     
     // front legs
     translate([0,+2*_t,0]) rotate([0,0,-90])
@@ -195,9 +178,9 @@ module ftsr()
         leg_holder(t=_t);
         translate([0,0,-2*_t]) %leg(t=_t);
     }
-    
-    _off = ft_ud/2+ft_sd/2+_t/2+tol;
+
     // back legs
+    _off = ft_ud/2+ft_sd/2+_t/2+tol;
     translate([0,y-_off,0]) rotate([0,0,-90])
     {
         leg_holder(t=_t);
@@ -222,8 +205,7 @@ module ftsr()
         translate([0,0,-2*_t]) %leg(t=_t);
     }
     
-    // hinge
-    //#rotate([0,90,0]) cylinder(h=h_h,d=h_d);
+    // hinges
     translate([0,y-w_t,z]) hinge();
     translate([x-h_h,y-w_t,z]) hinge();
     
@@ -294,7 +276,7 @@ module comb()
     
 }
 
-//comb();
+comb();
 
 module leg(t)
 {
@@ -333,7 +315,7 @@ module leg(t)
     }
 }
 
-//leg(g_l-ft_sd+t_tol);
+//leg(g_l-ft_sd+0.5);
 
 module leg_holder(t)
 {
