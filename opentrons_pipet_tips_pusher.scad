@@ -104,7 +104,7 @@ module opentrons_pipet_tips_pusher()
                 {
                     _x = i*g_l;
                     translate([_x,0,-eps])
-                        cylinder(d=u_d,h=z_d);
+                        cylinder(d=u_d,h=z_d+extention);
                     
                 }
                 
