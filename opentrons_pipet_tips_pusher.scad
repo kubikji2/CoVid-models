@@ -29,6 +29,8 @@ z_s = 1;
 z_d = 12.5;
 // general thickness
 t = 2;
+// top wall thickness
+wt_t = 1.25;
 // upper diameter
 u_d = 6.3;
 
@@ -42,7 +44,7 @@ c_d = 19;
 // distance from the lowes part
 c_yo = 13;
 // side wall thickness for the border
-c_t = 1.25;
+c_t = 1;
 
 // stopper parameters
 // stopper width in x axis
@@ -120,14 +122,14 @@ module opentrons_pipet_tips_pusher()
             cube([x_u+2*eps,y_t,z_d/2]);
         
         // main cut in top part
-        translate([ x_off+z_d/2,
+        #translate([ x_off+z_d/2,
                     y_l+y_m+y_u-t-eps,
                     z_d/2-(z_d-z)-z_s])
         rotate([-90,0,0])
-        translate([c_t/2,0,-eps]) hull()
+        translate([0,0,-eps]) hull()
         {
             cylinder(h=y_t,d=z_d-2*c_t);
-            translate([x_u-z_d-c_t,0,0])
+            translate([x_u-z_d,0,0])
                 cylinder(h=y_t,d=z_d-2*c_t);
         }
         
@@ -189,7 +191,7 @@ module opentrons_pipet_tips_pusher()
         
         
         // VISUALIZATION
-        %cube([x_l/2,y_l+y_m+y_u+y_t,z]);
+        //%cube([x_l/2,y_l+y_m+y_u+y_t,z]);
         
         
     }
