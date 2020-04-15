@@ -172,7 +172,7 @@ module opentrons_pipet_tips_pusher()
         // CARRIAGE CUT //
         //////////////////
         // translate to the middle in x axis
-        translate([x_u/2,c_yo,z-t])
+        translate([x_l/2,c_yo,z-t])
         {
             // left and right carriages
             translate([-c_d/2-c_w,0,-eps]) cube([c_w,c_l,t+2*eps]);
@@ -182,11 +182,14 @@ module opentrons_pipet_tips_pusher()
         /////////////////
         // STOPPER CUT //
         /////////////////
-        translate([x_u/2-s_w/2,s_yo,z-t-z_s-eps])  
+        translate([x_l/2-s_w/2,s_yo,z-t-z_s-eps])  
             cube([s_w,s_l,t+z_s+2*eps]);
-        translate([x_u/2-s_w/2,sc_yo+eps,0])
+        translate([x_l/2-s_w/2,sc_yo+eps,0])
             cube([s_w,(s_yo-sc_yo),z-t+sc_d]);
         
+        
+        // VISUALIZATION
+        %cube([x_l/2,y_l+y_m+y_u+y_t,z]);
         
         
     }
