@@ -54,7 +54,7 @@ s_yo = 44-0.2;
 // stopper carriage offset
 sc_yo = c_yo+1;
 // stopper carriage depth
-sc_d = 0.5;
+sc_d = 1;
 
 // arch parameters
 // arch diameter
@@ -161,11 +161,11 @@ module opentrons_pipet_tips_pusher()
             _xo = (x_l-8*g_l)/2 + i*g_l+g_l/2;
             translate([_xo,-eps,-eps])
             {
-                translate([0,t+2*eps,a_d-a_h]) rotate([90,0,0])
+                translate([0,t+2*eps,a_d/2+a_h]) rotate([90,0,0])
                     cylinder(d=a_d,h=t+2*eps);
-                translate([-a_d/2,0,0]) cube([a_d,t+2*eps,a_d-a_h/2]);
+                translate([-a_d/2,0,0]) cube([a_d,t+2*eps,a_h+a_d/2]);
             }
-            
+           
         }
         
         //////////////////
