@@ -145,6 +145,15 @@ module opentrons_pipet_tips_pusher(part="body")
             }
         }
         
+        // sloped cut
+        translate([-eps,y_l+y_m+y_u+y_t-t-extention,-z_s-(z_d-z)])
+        hull()
+        {
+            translate([0,z_d/2,0])rotate([0,90,0]) cylinder(d=eps,h=x_l+2*eps);
+            translate([0,0,z_d/2]) rotate([0,90,0]) cylinder(d=eps,h=x_l+2*eps);
+            translate([0,0,0]) rotate([0,90,0]) cylinder(d=eps,h=x_l+2*eps);
+        }
+        
         ////////////////
         // MIDDLE CUT //
         ////////////////
