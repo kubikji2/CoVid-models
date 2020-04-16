@@ -3,7 +3,7 @@ $fn = 90;
 eps = 0.01;
 
 // extention
-extention = 10;
+extention = 14;
 
 // grid parameter
 g_l = 9;
@@ -139,7 +139,7 @@ module opentrons_pipet_tips_pusher(part="body")
             // adding support beams
             for(i=[0:6])
             {
-                _t = 1;
+                _t = 1.5;
                 _xo = i*g_l+g_l/2-_t/2;
                 translate([_xo,-z_d/2,y_t-extention]) cube([_t,z_d,extention]);
             }
@@ -214,7 +214,19 @@ module opentrons_pipet_tips_pusher(part="body")
         // VISUALIZATION
         //%cube([x_l/2,y_l+y_m+y_u+y_t,z]);
         
-        // choosing part
+        // used extention cut
+        _h = 0.1;
+        #translate([x_l/2,t+(sc_yo-t)/2,z-t+_h-eps])
+            rotate([0,180,0])
+                linear_extrude(_h+eps)
+                    text(
+                        text=str(extention), font="Arial Unicode MS:style=Regular",
+                        size=5,valign="center",halign="center");
+        
+        
+        ///////////////////
+        // CHOOSING PART //
+        ///////////////////
         if(part != "blade")
         {
             translate([-eps,y_l+y_m+y_u+y_t-t-eps,-z_s-(z_d-z)])
