@@ -3,7 +3,7 @@ $fn = 90;
 eps = 0.01;
 
 // extention
-extention = 0;
+extention = 10;
 
 // grid parameter
 g_l = 9;
@@ -66,8 +66,9 @@ a_h = 7.25-a_d;
 // pillar width
 a_p = 3;
 
+// "blade", "body", "back"
 
-module opentrons_pipet_tips_pusher()
+module opentrons_pipet_tips_pusher(part="body")
 {
     difference()
     {
@@ -119,18 +120,18 @@ module opentrons_pipet_tips_pusher()
         //////////////
         // cut into the pipet tips part and the most upper part of y
         translate([x_off-eps,y_l+y_m+y_u-t,z_off-z_s-eps])
-            cube([x_u+2*eps,y_t,z_d/2]);
+            cube([x_u+2*eps,y_t-extention,z_d/2]);
         
         // main cut in top part
-        #translate([ x_off+z_d/2,
+        translate([ x_off+z_d/2,
                     y_l+y_m+y_u-t-eps,
                     z_d/2-(z_d-z)-z_s])
         rotate([-90,0,0])
         translate([0,0,-eps]) hull()
         {
-            cylinder(h=y_t,d=z_d-2*c_t);
+            cylinder(h=y_t+2*eps,d=z_d-2*c_t);
             translate([x_u-z_d,0,0])
-                cylinder(h=y_t,d=z_d-2*c_t);
+                cylinder(h=y_t+2*eps,d=z_d-2*c_t);
         }
         
         ////////////////
@@ -192,6 +193,25 @@ module opentrons_pipet_tips_pusher()
         
         // VISUALIZATION
         //%cube([x_l/2,y_l+y_m+y_u+y_t,z]);
+        
+        // choosing part
+        if(part != "blade")
+        {
+            translate([-eps,y_l+y_m+y_u+y_t-t-eps,-z_s-(z_d-z)])
+                cube([x_l+2*eps,t+2*eps,z_d+2*eps]);
+        }
+        
+        if(part != "body")
+        {
+            translate([-eps,t,-eps-z_d])
+                cube([x_l+2*eps,y_l+y_m+y_u+y_t-2*t,z+z_d+2*eps]);
+        }
+        
+        if(part != "back")
+        {
+            translate([-eps,-eps,-eps])
+                cube([x_l+2*eps,t+2*eps,z+2*eps]);
+        }
         
         
     }
