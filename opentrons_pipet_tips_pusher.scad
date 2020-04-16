@@ -127,11 +127,22 @@ module opentrons_pipet_tips_pusher(part="body")
                     y_l+y_m+y_u-t-eps,
                     z_d/2-(z_d-z)-z_s])
         rotate([-90,0,0])
-        translate([0,0,-eps]) hull()
+        difference()
         {
-            cylinder(h=y_t+2*eps,d=z_d-2*c_t);
-            translate([x_u-z_d,0,0])
+            translate([0,0,-eps]) hull()
+            {
                 cylinder(h=y_t+2*eps,d=z_d-2*c_t);
+                translate([x_u-z_d,0,0])
+                    cylinder(h=y_t+2*eps,d=z_d-2*c_t);
+            }
+            
+            // adding support beams
+            for(i=[0:6])
+            {
+                _t = 1;
+                _xo = i*g_l+g_l/2-_t/2;
+                translate([_xo,-z_d/2,y_t-extention]) cube([_t,z_d,extention]);
+            }
         }
         
         ////////////////
