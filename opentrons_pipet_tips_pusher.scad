@@ -66,9 +66,14 @@ a_h = 7.25-a_d;
 // pillar width
 a_p = 3;
 
+// blade extentions
+//bes = [0,0.2,0.4,0.8,0.8,0.4,0.2,0];
+bes = [0.0,0.5,1.0,1.5,1.5,1.0,0.5,0.0];
+
+
 // "blade", "body", "back"
 
-module opentrons_pipet_tips_pusher(part="body")
+module opentrons_pipet_tips_pusher(part="blade")
 {
     x_off = (x_l-x_u)/2;
     z_off = z-z_d;
@@ -220,7 +225,7 @@ module opentrons_pipet_tips_pusher(part="body")
         
         // used extention cut
         _h = 0.1;
-        #translate([x_l/2,t+(sc_yo-t)/2,z-t+_h-eps])
+        translate([x_l/2,t+(sc_yo-t)/2,z-t+_h-eps])
             rotate([0,180,0])
                 linear_extrude(_h+eps)
                     text(
@@ -252,22 +257,48 @@ module opentrons_pipet_tips_pusher(part="body")
     }
     
     // additional manual support
-    translate([ x_off+z_d/2,
-                y_l+y_m+y_u-eps,
-                z-z_s])
+    if(part=="body")
     {
-        _t = 1;
-        l_t = 0.1;
-        
-        %for(i=[0:6])
+        translate([ x_off+z_d/2,
+                    y_l+y_m+y_u-eps,
+                    z-z_s])
         {
             _t = 1;
             l_t = 0.1;
-            _xo = i*g_l+g_l/2-_t/2;
-            // upper support beams
-            translate([_xo,0,l_t]) cube([_t,y_t-t-2*_t,z_s-l_t]);
+            
+            /*
+            for(i=[0:6])
+            {
+                _t = 1;
+                l_t = 0.1;
+                _xo = i*g_l+g_l/2-_t/2;
+                // upper support beams
+                translate([_xo,0,l_t]) cube([_t,y_t-t-2*_t,z_s-l_t]);
+            }
+            */
+            translate([0,y_t-t-2*_t,0]) cube([x_u-z_d,2*_t,z_s]);
         }
-        translate([0,y_t-t-2*_t,0]) cube([x_u-z_d,2*_t,z_s]);
+    }
+    
+    // additional blade extentioins
+    if(part=="blade")
+    {
+        translate([ x_off+z_d/2,
+                        y_l+y_m+y_u+y_t,
+                        z_d/2-(z_d-z)-z_s])
+        for(i=[0:7])
+        {
+            difference()
+            {
+                _h = bes[i];
+                _x = i*g_l;
+                translate([_x-g_l/2,0,-g_l/2]) cube([g_l,_h,g_l]);
+                translate([_x,eps+_h,0]) rotate([90,0,0])
+                    cylinder(h=_h+2*eps,d=u_d);
+                
+                
+            }
+        }
     }
 }
 
