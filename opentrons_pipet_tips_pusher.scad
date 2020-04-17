@@ -3,7 +3,7 @@ $fn = 90;
 eps = 0.01;
 
 // extention
-extention = 14;
+extention = 14.5;
 
 // grid parameter
 g_l = 9;
@@ -70,10 +70,11 @@ a_p = 3;
 
 module opentrons_pipet_tips_pusher(part="body")
 {
+    x_off = (x_l-x_u)/2;
+    z_off = z-z_d;
+    
     difference()
     {
-        x_off = (x_l-x_u)/2;
-        z_off = z-z_d;
         union()
         {
             // lowest block
@@ -141,7 +142,10 @@ module opentrons_pipet_tips_pusher(part="body")
             {
                 _t = 1.5;
                 _xo = i*g_l+g_l/2-_t/2;
+                // tip shafts supports
                 translate([_xo,-z_d/2,y_t-extention]) cube([_t,z_d,extention]);
+                // upper support beams
+                //translate([_xo,-z_d/2-z_s,t]) cube([_t,z_d,y_t-t]);
             }
         }
         
@@ -223,7 +227,7 @@ module opentrons_pipet_tips_pusher(part="body")
                         text=str(extention), font="Arial Unicode MS:style=Regular",
                         size=5,valign="center",halign="center");
         
-        
+       
         ///////////////////
         // CHOOSING PART //
         ///////////////////
@@ -244,8 +248,26 @@ module opentrons_pipet_tips_pusher(part="body")
             translate([-eps,-eps,-eps])
                 cube([x_l+2*eps,t+2*eps,z+2*eps]);
         }
+           
+    }
+    
+    // additional manual support
+    translate([ x_off+z_d/2,
+                y_l+y_m+y_u-eps,
+                z-z_s])
+    {
+        _t = 1;
+        l_t = 0.1;
         
-        
+        %for(i=[0:6])
+        {
+            _t = 1;
+            l_t = 0.1;
+            _xo = i*g_l+g_l/2-_t/2;
+            // upper support beams
+            translate([_xo,0,l_t]) cube([_t,y_t-t-2*_t,z_s-l_t]);
+        }
+        translate([0,y_t-t-2*_t,0]) cube([x_u-z_d,2*_t,z_s]);
     }
 }
 
