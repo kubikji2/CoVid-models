@@ -5,7 +5,9 @@ t_tol = 0.2;
 
 g_l = 9;
 
-extention = 14;
+// metal tip bigger diamer length
+mt_l = 13.3;
+extention = mt_l+0.7;
 
 // hole parameters
 d = 5.2+t_tol;
@@ -37,7 +39,7 @@ c_yo = 1;
 // connector dimension in y axis
 c_y = 2*c_wt;
 // connector dimension in z axis
-c_z = 15.5+c_bd+c_wt;
+c_z = mt_l+2.2+c_bd+c_wt;
 
 
 // box parameters
