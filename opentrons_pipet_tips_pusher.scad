@@ -3,7 +3,7 @@ $fn = 90;
 eps = 0.01;
 
 // extention
-extention = 14.5;
+extention = 14;
 
 // grid parameter
 g_l = 9;
@@ -30,7 +30,7 @@ z_d = 12.5;
 // general thickness
 t = 2;
 // top wall thickness
-wt_t = 1.25;
+wt_t = 2;
 // upper diameter
 u_d = 6.3;
 
@@ -73,7 +73,7 @@ bes = [0.0,0.5,1.0,1.5,1.5,1.0,0.5,0.0];
 
 // "blade", "body", "back"
 
-module opentrons_pipet_tips_pusher(part="body")
+module opentrons_pipet_tips_pusher(part="blade")
 {
     x_off = (x_l-x_u)/2;
     z_off = z-z_d;
@@ -114,9 +114,9 @@ module opentrons_pipet_tips_pusher(part="body")
                     translate([0,0,y_t-extention])
                     hull()
                     {
-                        cylinder(h=extention,d=z_d+2*z_s);
+                        cylinder(h=extention,d=z_d+2*wt_t);
                         translate([x_u-z_d,0,0])
-                            cylinder(h=extention,d=z_d+2*z_s);
+                            cylinder(h=extention,d=z_d+2*wt_t);
                     }
                 }
                                                 
@@ -141,8 +141,9 @@ module opentrons_pipet_tips_pusher(part="body")
         // TOP CUTS //
         //////////////
         // cut into the pipet tips part and the most upper part of y
-        translate([x_off-eps,y_l+y_m+y_u-t,z_off-z_s-eps])
-            cube([x_u+2*eps,y_t-extention+t,z_d/2]);
+        translate([-eps-wt_t,y_l+y_m+y_u-t,-z_s-wt_t+z_off-eps])
+            cube([x_l+2*eps+2*wt_t,y_t-extention+t+extention/3,z_d+wt_t-z_s]);
+        
         
         // main cut in top part
         translate([ x_off+z_d/2,
@@ -173,15 +174,16 @@ module opentrons_pipet_tips_pusher(part="body")
         }
         
         // sloped cut
-        translate([-eps,y_l+y_m+y_u+y_t-extention,-2*z_s-(z_d-z)])
+        translate([-wt_t-eps,y_l+y_m+y_u+y_t-2*extention/3,-z_s-(z_d-z)-wt_t])
         hull()
         {
-            translate([0,z_d/2+z_s,0]) rotate([0,90,0])
-                cylinder(d=eps,h=x_l+2*eps);
-            translate([0,0,z_d/2+z_s]) rotate([0,90,0])
-                cylinder(d=eps,h=x_l+2*eps);
+            _s = extention/3;
+            translate([0,_s,0]) rotate([0,90,0])
+                cylinder(d=eps,h=x_l+2*wt_t+2*eps);
+            translate([0,0,z_d/2+wt_t]) rotate([0,90,0])
+                cylinder(d=eps,h=x_l+2*wt_t+2*eps);
             translate([0,0,0]) rotate([0,90,0])
-                cylinder(d=eps,h=x_l+2*eps);
+                cylinder(d=eps,h=x_l+2*wt_t+2*eps);
         }
         
         ////////////////
@@ -250,8 +252,9 @@ module opentrons_pipet_tips_pusher(part="body")
             rotate([0,180,0])
                 linear_extrude(_h+eps)
                     text(
-                        text=str(extention), font="Arial Unicode MS:style=Regular",
-                        size=5,valign="center",halign="center");
+                        text=str(extention),
+                        font="Arial Unicode MS:style=Regular",
+                        size=5, valign="center", halign="center");
         
        
         ///////////////////
@@ -260,14 +263,14 @@ module opentrons_pipet_tips_pusher(part="body")
         
         if(part != "blade")
         {
-            translate([-eps,y_l+y_m+y_u+y_t-t-eps,-2*z_s-(z_d-z)])
-                cube([x_l+2*eps,t+2*eps,z_d+2*eps+2*z_s]);
+            translate([-wt_t-eps,y_l+y_m+y_u+y_t-t-eps,-z_s-(z_d-z)-wt_t])
+                cube([x_l+2*wt_t+2*eps,t+2*eps,z_d+2*eps+z_s+2*wt_t]);
         }
         
         if(part != "body")
         {
-            translate([-eps,t,-eps-z_d])
-                cube([x_l+2*eps,y_l+y_m+y_u+y_t-2*t,z+z_d+2*eps]);
+            translate([-wt_t-eps,t,-wt_t-eps-z_d])
+                cube([x_l+2*wt_t+2*eps,y_l+y_m+y_u+y_t-2*t,z+z_d++2*wt_t+2*eps]);
         }
         
         if(part != "back")
