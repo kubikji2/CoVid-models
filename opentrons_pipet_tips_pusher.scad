@@ -73,7 +73,7 @@ bes = [0.0,0.5,1.0,1.5,1.5,1.0,0.5,0.0];
 
 // "blade", "body", "back"
 
-module opentrons_pipet_tips_pusher(part="blade")
+module opentrons_pipet_tips_pusher(part="body")
 {
     x_off = (x_l-x_u)/2;
     z_off = z-z_d;
@@ -101,11 +101,23 @@ module opentrons_pipet_tips_pusher(part="blade")
             rotate([-90,0,0])
             difference()
             {
-                hull()
+                union()
                 {
-                    cylinder(h=y_t,d=z_d);
-                    translate([x_u-z_d,0,0])
+                    //basic top part
+                    hull()
+                    {
                         cylinder(h=y_t,d=z_d);
+                        translate([x_u-z_d,0,0])
+                            cylinder(h=y_t,d=z_d);
+                    }
+                    // extended and reinforced top part
+                    translate([0,0,y_t-extention])
+                    hull()
+                    {
+                        cylinder(h=extention,d=z_d+2*z_s);
+                        translate([x_u-z_d,0,0])
+                            cylinder(h=extention,d=z_d+2*z_s);
+                    }
                 }
                                                 
                 // hole for pipette tips
@@ -118,6 +130,10 @@ module opentrons_pipet_tips_pusher(part="blade")
                 }
                 
             }
+            
+            // top reinforcement
+            translate([ x_off+z_d/2, y_l+y_m+y_u, z-z_s])
+                cube([x_u-z_d,y_t,z_s]);
         }
         
         
@@ -126,7 +142,7 @@ module opentrons_pipet_tips_pusher(part="blade")
         //////////////
         // cut into the pipet tips part and the most upper part of y
         translate([x_off-eps,y_l+y_m+y_u-t,z_off-z_s-eps])
-            cube([x_u+2*eps,y_t-extention,z_d/2]);
+            cube([x_u+2*eps,y_t-extention+t,z_d/2]);
         
         // main cut in top part
         translate([ x_off+z_d/2,
@@ -143,24 +159,29 @@ module opentrons_pipet_tips_pusher(part="blade")
             }
             
             // adding support beams
+            /*
             for(i=[0:6])
             {
                 _t = 1.5;
                 _xo = i*g_l+g_l/2-_t/2;
                 // tip shafts supports
-                translate([_xo,-z_d/2,y_t-extention]) cube([_t,z_d,extention]);
+                translate([_xo,-z_d/2,y_t-extention+t]) cube([_t,z_d,extention]);
                 // upper support beams
                 //translate([_xo,-z_d/2-z_s,t]) cube([_t,z_d,y_t-t]);
             }
+            */
         }
         
         // sloped cut
-        translate([-eps,y_l+y_m+y_u+y_t-t-extention,-z_s-(z_d-z)])
+        translate([-eps,y_l+y_m+y_u+y_t-extention,-2*z_s-(z_d-z)])
         hull()
         {
-            translate([0,z_d/2,0])rotate([0,90,0]) cylinder(d=eps,h=x_l+2*eps);
-            translate([0,0,z_d/2]) rotate([0,90,0]) cylinder(d=eps,h=x_l+2*eps);
-            translate([0,0,0]) rotate([0,90,0]) cylinder(d=eps,h=x_l+2*eps);
+            translate([0,z_d/2+z_s,0]) rotate([0,90,0])
+                cylinder(d=eps,h=x_l+2*eps);
+            translate([0,0,z_d/2+z_s]) rotate([0,90,0])
+                cylinder(d=eps,h=x_l+2*eps);
+            translate([0,0,0]) rotate([0,90,0])
+                cylinder(d=eps,h=x_l+2*eps);
         }
         
         ////////////////
@@ -236,10 +257,11 @@ module opentrons_pipet_tips_pusher(part="blade")
         ///////////////////
         // CHOOSING PART //
         ///////////////////
+        
         if(part != "blade")
         {
-            translate([-eps,y_l+y_m+y_u+y_t-t-eps,-z_s-(z_d-z)])
-                cube([x_l+2*eps,t+2*eps,z_d+2*eps]);
+            translate([-eps,y_l+y_m+y_u+y_t-t-eps,-2*z_s-(z_d-z)])
+                cube([x_l+2*eps,t+2*eps,z_d+2*eps+2*z_s]);
         }
         
         if(part != "body")
@@ -253,33 +275,11 @@ module opentrons_pipet_tips_pusher(part="blade")
             translate([-eps,-eps,-eps])
                 cube([x_l+2*eps,t+2*eps,z+2*eps]);
         }
+        
            
     }
     
-    // additional manual support
-    if(part=="body")
-    {
-        translate([ x_off+z_d/2,
-                    y_l+y_m+y_u-eps,
-                    z-z_s])
-        {
-            _t = 1;
-            l_t = 0.1;
-            
-            /*
-            for(i=[0:6])
-            {
-                _t = 1;
-                l_t = 0.1;
-                _xo = i*g_l+g_l/2-_t/2;
-                // upper support beams
-                translate([_xo,0,l_t]) cube([_t,y_t-t-2*_t,z_s-l_t]);
-            }
-            */
-            translate([0,y_t-t-2*_t,0]) cube([x_u-z_d,2*_t,z_s]);
-        }
-    }
-    
+   
     // additional blade extentioins
     if(part=="blade")
     {
