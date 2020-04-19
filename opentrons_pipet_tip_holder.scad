@@ -47,44 +47,38 @@ x = 8*g_l;
 y = g_l;
 z = h+H;
 
-module interface()
+module distancers()
 {
     // connector connector            
     _h = H+h-2*extention/3;
     _ho = H+h-_h;
     _w = 2;
     
+    translate([-c_x-1,0,0])
     difference()
     {
-        translate([c_xo-g_l/2,-g_l/2,_ho])
+        translate([0,0,_ho])
             cube([c_x,_w,c_z-_ho]);
         
-        // left connector bolt hole
-        translate([c_xo-g_l/2,-c_y+c_yo,0])
+        // bolt hole
+        translate([c_x/2,_w+eps,c_z-c_bd/2-c_wt])
         {
-            // bolt hole
-            translate([c_x/2,_w+eps,c_z-c_bd/2-c_wt])
+            rotate([90,0,0])
             {
-                rotate([90,0,0])
-                {
-                    // bolt hole
-                    cylinder(d=c_bd,h=g_l/2+c_yo+2*eps);
-                }
-                
-                // support plane cuts
-                translate([0,-1,0])
-                {
-                    translate([-c_x/2-eps,0,-c_bd/2]) cube([c_wt,1,c_bd]);
-                    translate([-c_x/2-eps,0,-c_nd/2-5*c_wt]) cube([c_x+2*eps,1,5*c_wt]);
-                }
-                
-                
+                // bolt hole
+                cylinder(d=c_bd,h=g_l/2+c_yo+2*eps);
             }
             
+            // support plane cuts
+            translate([0,-1,0])
+            {
+                translate([-c_x/2-eps,0,-c_bd/2]) cube([c_wt,1,c_bd]);
+                translate([-c_x/2-eps,0,-c_nd/2-5*c_wt]) cube([c_x+2*eps,1,5*c_wt]);
+            }
         }
         
         // left sloped cut
-        translate([c_xo-g_l/2,c_yo-g_l/2,2*extention/3]) hull()
+        translate([c_xo+c_x,c_yo,2*extention/3]) hull()
         {
             translate([0,g_l/2+eps,0]) rotate([90,0,0])
                 cylinder(d=eps,h=g_l/2+c_yo+2*eps);
@@ -95,37 +89,33 @@ module interface()
         }
     }
     
+    translate([1,0,0])
     difference()
     {
-        //translate([c_xo-g_l/2,-g_l/2,_ho])
-        //    cube([c_x,_w,c_z-_ho]);
-        translate([c_l+c_xo-c_x-g_l/2,-g_l/2,_ho])
+        translate([0,0,_ho])
             cube([c_x,_w,c_z-_ho]);
         
-        // right connector bolt hole
-        translate([c_l+c_xo-c_x-g_l/2,-c_y+c_yo,0])
+        // screw hole for M3 bolt and nut
+        translate([c_x/2,_w+eps,c_z-c_bd/2-c_wt])
         {
-            // screw hole for M3 bolt and nut
-            translate([c_x/2,_w+eps,c_z-c_bd/2-c_wt])
+            rotate([90,0,0])
             {
-                rotate([90,0,0])
-                {
-                    // bolt hole
-                    cylinder(d=c_bd,h=g_l/2+c_yo+2*eps);
-                }
-                
-                // support plane cuts
-                translate([0,-1,0])
-                {
-                    translate([c_x/2-c_wt+eps,0,-c_bd/2]) cube([c_wt,1,c_bd]);
-                    translate([-c_x/2+eps,0,-c_nd/2-5*c_wt]) cube([c_x,1,5*c_wt]);
-                }
+                // bolt hole
+                cylinder(d=c_bd,h=g_l/2+c_yo+2*eps);
+            }
+            
+            // support plane cuts
+            translate([0,-1,0])
+            {
+                translate([c_x/2-c_wt+eps,0,-c_bd/2]) cube([c_wt+2*eps,1,c_bd]);
+                translate([-c_x/2-eps,0,-c_nd/2-5*c_wt]) cube([c_x+2*eps,1,5*c_wt]);
             }
         }
+
         
         
         // right sloped cut
-        translate([x-g_l/2,c_yo-g_l/2,2*extention/3]) hull()
+        translate([0,c_yo,2*extention/3]) hull()
         {
             translate([-c_xo,g_l/2+eps,0]) rotate([90,0,0])
                 cylinder(d=eps,h=g_l/2+c_yo+2*eps);
@@ -137,7 +127,7 @@ module interface()
     }
 }
 
-//interface();
+distancers();
 
 module pipet_tip_holder()
 {
@@ -268,4 +258,4 @@ module pipet_tip_holder()
     
 }
 
-pipet_tip_holder();
+//pipet_tip_holder();
