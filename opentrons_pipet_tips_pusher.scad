@@ -30,7 +30,7 @@ z_d = 12.5;
 // general thickness
 t = 2;
 // top wall thickness
-wt_t = 2;
+wt_t = 1;
 // upper diameter
 u_d = 6.3;
 
@@ -73,7 +73,7 @@ bes = [0.0,0.5,1.0,1.5,1.5,1.0,0.5,0.0];
 
 // "blade", "body", "back"
 
-module opentrons_pipet_tips_pusher(part="blade")
+module opentrons_pipet_tips_pusher(part="body")
 {
     x_off = (x_l-x_u)/2;
     z_off = z-z_d;
