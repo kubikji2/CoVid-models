@@ -47,7 +47,7 @@ x = 8*g_l;
 y = g_l;
 z = h+H;
 
-module distancers()
+module left_distancer()
 {
     // connector connector            
     _h = H+h-2*extention/3;
@@ -88,6 +88,14 @@ module distancers()
                 cylinder(d=eps,h=g_l/2+c_yo+2*eps);
         }
     }
+}
+
+module right_distancer()
+{
+    // connector connector            
+    _h = H+h-2*extention/3;
+    _ho = H+h-_h;
+    _w = 2;
     
     translate([1,0,0])
     difference()
@@ -125,6 +133,51 @@ module distancers()
                 cylinder(d=eps,h=g_l/2+c_yo+2*eps);
         }
     }
+}
+    
+
+
+// This module is terrible, but it's almost 3.00 in the morning and I am tired and desparate to become better human being.
+module distancers()
+{
+    
+    // connector connector            
+    _h = H+h-2*extention/3;
+    _ho = H+h-_h;
+    _w = 2;
+    
+    _alpha = 5;
+    a = 20;
+    b = 10;
+    c = 30;
+    
+    
+    if(_alpha > 0)
+    {
+        difference()
+        {
+            translate([0,0,-c_z])
+            union()
+            {
+                left_distancer();
+                right_distancer();
+            }
+            translate([-a/2,0,0]) #rotate([180+_alpha,0,0]) cube([a,b,c]);
+        }
+    } else {
+        difference()
+        {
+            rotate([-_alpha,0,0]) translate([0,0,-_ho])
+            union()
+            {
+                left_distancer();
+                right_distancer();
+            }
+            #translate([-a/2,-b,0]) cube([a,b,c]);
+        }
+    }
+    
+    
 }
 
 distancers();
