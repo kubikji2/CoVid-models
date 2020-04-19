@@ -35,6 +35,7 @@ c_xo = -(c_l-8*g_l)/2;
 // connector dimension size in x axis
 c_x = 2*c_wt+c_bd;
 // connectors y offset
+// -2 is offset used for distancers
 c_yo = 1.5-2;
 // connector dimension in y axis
 c_y = 2*c_wt;
@@ -180,7 +181,7 @@ module distancers()
     
 }
 
-distancers();
+//distancers();
 
 module pipet_tip_holder()
 {
@@ -243,16 +244,7 @@ module pipet_tip_holder()
                     translate([0,0,g_l/2+c_yo-1+eps])
                         cylinder(d=c_nd,h=g_l/4+2*eps,$fn=6);
                 }
-                
-                /*
-                // support plane cuts
-                translate([0,-1,0])
-                {
-                    translate([-c_x/2-eps,0,-c_bd/2]) cube([c_wt,1,c_bd]);
-                    translate([-c_x/2-eps,0,-c_nd/2-5*c_wt]) cube([c_x,1,5*c_wt]);
-                }
-                */
-                
+                              
                 
             }
             
@@ -273,14 +265,6 @@ module pipet_tip_holder()
                         cylinder(d=c_nd,h=g_l/4+2*eps,$fn=6);
                 }
                 
-                /*
-                // support plane cuts
-                translate([0,-1,0])
-                {
-                    translate([c_x/2-c_wt+eps,0,-c_bd/2]) cube([c_wt,1,c_bd]);
-                    translate([-c_x/2+eps,0,-c_nd/2-5*c_wt]) cube([c_x,1,5*c_wt]);
-                }
-                */
             }
         }
         
@@ -311,4 +295,4 @@ module pipet_tip_holder()
     
 }
 
-//pipet_tip_holder();
+pipet_tip_holder();
