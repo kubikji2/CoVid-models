@@ -70,10 +70,13 @@ a_p = 3;
 //bes = [0,0.2,0.4,0.8,0.8,0.4,0.2,0];
 bes = [0.0,0.5,1.0,1.5,1.5,1.0,0.5,0.0];
 
+// TMP solition for top blade thickness, max value is thickness t
+t_t = 1;
+
 
 // "blade", "body", "back"
 
-module opentrons_pipet_tips_pusher(part="body")
+module opentrons_pipet_tips_pusher(part="blade")
 {
     x_off = (x_l-x_u)/2;
     z_off = z-z_d;
@@ -277,7 +280,7 @@ module opentrons_pipet_tips_pusher(part="body")
         if(part != "body")
         {
             translate([-wt_t-eps,t,-wt_t-eps-z_d])
-                cube([x_l+2*wt_t+2*eps,y_l+y_m+y_u+y_t-2*t,z+z_d++2*wt_t+2*eps]);
+                cube([x_l+2*wt_t+2*eps,y_l+y_m+y_u+y_t-t-t_t,z+z_d+2*wt_t+2*eps]);
         }
         
         if(part != "back")
@@ -302,7 +305,8 @@ module opentrons_pipet_tips_pusher(part="body")
             {
                 _h = bes[i];
                 _x = i*g_l;
-                translate([_x-g_l/2,0,-g_l/2]) cube([g_l,_h,g_l]);
+                _yo = wt_t+(z_d-g_l)/2;
+                translate([_x-g_l/2,0,-g_l/2-_yo]) cube([g_l,_h,g_l+2*_yo]);
                 translate([_x,eps+_h,0]) rotate([90,0,0])
                     cylinder(h=_h+2*eps,d=u_d);
                 
