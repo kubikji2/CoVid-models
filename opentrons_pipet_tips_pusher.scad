@@ -3,7 +3,7 @@ $fn = 90;
 eps = 0.01;
 
 // extention
-extention = 14;
+extention = 14+3;
 
 // grid parameter
 g_l = 9;
@@ -84,6 +84,7 @@ module opentrons_pipet_tips_pusher(part="body")
         {
             // lowest block
             cube([x_l,y_l,z]);
+            
             // middle block
             hull()
             {
@@ -92,7 +93,13 @@ module opentrons_pipet_tips_pusher(part="body")
                 translate([x_off,y_l+y_m,0]) cube([x_u,_o,z]);
             }
             // upper block
-            translate([x_off,y_l+y_m,0]) cube([x_u,y_u,z]);
+            //translate([x_off,y_l+y_m,0]) cube([x_u,y_u,z]);
+            translate([x_off,y_l+y_m,0]) hull()
+            {
+                _t = 3;
+                cube([x_u,y_u-2*_t,z]); 
+                translate([_t,y_u-1]) cube([x_u-2*_t,1,z]);
+            }
             
             // top part
             translate([ x_off+z_d/2,
