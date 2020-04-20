@@ -222,7 +222,8 @@ module pipet_tip_holder()
             
             //if(i==0 || i==7)
             _xo = i*g_l;
-            _D = (i==0 || i==7) ? D + 0.2 : D;
+            //_D = (i==0 || i==7) ? D + 0.2 : D;
+            _D = D +0.2;
             translate([_xo,0,0])
             {
                 translate([0,0,h-eps]) cylinder(h=H+2*eps,d=_D);
