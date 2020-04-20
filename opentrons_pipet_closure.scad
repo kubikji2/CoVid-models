@@ -76,6 +76,15 @@ module closure()
                 translate([0,0,g_z-1]) cylinder(h=1+2*eps,d=m3_nd,$fn=6);
             }
         }
+        
+        // adding text
+        _tt = 0.1;
+        translate([g_x/2,g_y-15,g_z-wt+_tt-eps])
+            rotate([0,180,0])
+                linear_extrude(_tt)
+                    text(   text="I am sorry Sarrah...", size=6,
+                            font="Malgun Gothic:style=Bold",
+                            halign="center", valign="center");
 
     }   
     
