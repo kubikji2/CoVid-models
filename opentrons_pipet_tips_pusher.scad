@@ -70,13 +70,15 @@ a_p = 3;
 //bes = [0,0.2,0.4,0.8,0.8,0.4,0.2,0];
 bes = [0.0,0.5,1.0,1.5,1.5,1.0,0.5,0.0];
 
-// TMP solition for top blade thickness, max value is thickness t
+// TMP solution for top blade thickness, max value is thickness t
+/////////////////////////////////////
 t_t = 1;
+/////////////////////////////////////
 
 
 // "blade", "body", "back"
 
-module opentrons_pipet_tips_pusher(part="blade")
+module opentrons_pipet_tips_pusher(part="body")
 {
     x_off = (x_l-x_u)/2;
     z_off = z-z_d;
