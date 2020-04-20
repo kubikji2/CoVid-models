@@ -44,33 +44,43 @@ s_y = 17+(g_y-h_y)/2;
 // final height in z axis including roof
 s_z = 15;
 
-module closure_bust()
-{
-    difference()
-    {
-        union()
-        {
-            // shoulders
-            hull()
-            {
-                translate([(g_x-h_xf)/2,g_y-eps,0])
-                    cube([h_xb,eps,g_z]);
-                translate([g_x/2-s_x/2,g_y+s_y-eps,0])
-                    cube([s_x,eps,s_z]);
-            }
-            
-            // TODO neck
-            
-        }
-        
-    }
-    
-}
+// neck parameters
+n_x = s_x;
+n_y = 22;
+n_z = 13.5;
 
-closure_bust();
+// neck holes parameters
+nhl_d = 5.8;
+nhl_l = nhl_d+24;
+nhl_yo = n_y - nhl_d/2 - 14.5;
+
+// neck holes upper left diameter
+nhu_ld = 5.7;
+nhu_rD = 6.2;
+nhu_rd = 3.5;
+nhu_rh = 6;
+nhu_l = nhu_ld/2+nhu_rD/2+14.4;
+
+nhu_xo = 7+nhu_ld/2;
+nhu_yo = n_y-(4.5+nhu_ld/2);
+
+// neck sloped cut
+sc_y1 = 2;
+sc_y2 = 7;
+
+// trench parameters
+t_y = n_y-13;
+t_z = 6;
+
+// fortification parameters
+f_xl = 21;
+f_xu = 13;
+f_yl = 7.6;
+f_d = 1.7;
+
 
 // In the end, I only wish for closure.
-module closure_torso()
+module closure()
 {
     // bolt and nuts hole
     // front x offset
@@ -86,7 +96,28 @@ module closure_torso()
     difference()
     {
         // body basic shape
-        round_cube(x=g_x,y=g_y,z=g_z,d=g_d);
+        union()
+        {
+            // chest shape
+            round_cube(x=g_x,y=g_y,z=g_z,d=g_d);
+            
+            // shoulders
+            translate([0,g_y-g_d,0])
+                    cube([g_x,g_d,g_z]);
+            hull()
+            {
+                translate([0,g_y-eps,0])
+                    cube([g_x,eps,g_z]);
+                translate([g_x/2-s_x/2,g_y+s_y-eps,0])
+                    cube([s_x,eps,s_z]);
+            }
+            
+            // neck
+            translate([(g_x/2-n_x/2),g_y+s_y,0])
+                cube([n_x,n_y,n_z]);
+            
+            
+        }
     
         // main cut
         translate([wt,wt,-eps]) round_cube(x=g_x-2*wt,y=g_y-2*wt,z=g_z-wt+eps,d=g_d);
@@ -110,6 +141,139 @@ module closure_torso()
             }
         }
         
+        // neck cuts
+        translate([g_x/2-n_x/2,g_y+s_y,0])
+        {
+            // digging trench
+            translate([-eps,0,n_z-t_z+eps])
+                cube([s_x+2*eps,t_y,t_z+eps]);
+            
+            // digging fortification
+            translate([n_x/2-f_xu/2,eps,n_z-f_d+eps])
+                cube([f_xu,n_y+2*eps,f_d]);
+            translate([n_x/2-f_xl/2,t_y-eps,n_z-f_d+eps])
+                cube([f_xl,f_yl+2*eps,f_d]);
+            
+            // neck piercings
+            // lower
+            translate([n_x/2-nhl_l/2,0,-eps])
+            {
+                translate([0,nhl_yo,0])
+                    cylinder(d=nhl_d, h=n_z+2*eps);
+                translate([nhl_l,nhl_yo,0])
+                    cylinder(d=nhl_d, h=n_z+2*eps);
+            }
+            
+            // I should not be making fun of comments...
+            // ... but I am running low on both sanity and will
+            
+            // neck piercings
+            // upper
+            translate([nhu_xo,nhu_yo,-eps])
+            {
+                // left hole
+                cylinder(h=n_z+2*eps,d=nhu_ld);
+                // right hole
+                translate([nhu_l,0,0])
+                {
+                    cylinder(h=n_z+2*eps,d=nhu_rd);
+                    // right upper hole
+                    translate([0,0,n_z-nhu_rh])
+                        cylinder(h=nhu_rh+2*eps,d=nhu_rD);
+                }                
+            }
+            
+            difference()
+            {
+                union()
+                {   
+                    // main lower cut
+                    translate([wt,-eps,-eps])
+                        cube([n_x-2*wt,n_y+2*eps, n_z-wt-t_z+eps]);
+                        
+                    
+                    // main upper cut
+                    translate([wt,t_y+wt,-eps])
+                        cube([n_x-2*wt,n_y-t_y-wt+2*eps,n_z-wt-f_d]);           
+                }
+                
+                // lower screw shafts
+                translate([n_x/2-nhl_l/2,0,-eps])
+                {
+                    translate([0,nhl_yo,0])
+                        cylinder(d=nhl_d+2*wt, h=n_z+2*eps);
+                    translate([nhl_l,nhl_yo,0])
+                        cylinder(d=nhl_d+2*wt, h=n_z+2*eps);
+                }
+                
+                // upper screw shafts
+                translate([nhu_xo,nhu_yo,-eps])
+                {
+                    // left hole
+                    cylinder(h=n_z+2*eps,d=nhu_ld+2*wt);
+                    // right hole
+                    translate([nhu_l,0,0]) hull()
+                    {
+                        cylinder(h=n_z+2*eps,d=nhu_rd+2*wt);
+                        // right upper hole
+                        translate([0,0,n_z-nhu_rh])
+                            cylinder(h=nhu_rh+2*eps,d=nhu_rD+2*wt);
+                    }                
+                }
+                               
+            }
+            
+            // I just want to be sure, that I am not bad person.
+            
+            // sloped cut
+            translate([-eps,sc_y1,0]) hull()
+            {
+                // lower front
+                rotate([0,90,0]) cylinder(h=wt+2*eps,d=eps);
+                // lower back
+                translate([0,n_y-sc_y1,0]) rotate([0,90,0])
+                    cylinder(h=wt+2*eps,d=eps);
+                // upper back
+                translate([0,n_y-sc_y1,n_z-wt]) rotate([0,90,0])
+                    cylinder(h=wt+2*eps,d=eps);
+                                // upper back
+                translate([0,n_y-sc_y1-sc_y2,n_z-wt]) rotate([0,90,0])
+                    cylinder(h=wt+2*eps,d=eps);
+            }
+            
+            // cubic cut next to the sloped cut
+            // TODO might be optional
+            translate([-eps,n_y-sc_y2+eps,-eps])
+                cube([(n_x-f_xu)/2-wt,sc_y2,n_z-wt+2*eps]);
+                        
+        
+        }
+        
+        // shoulders cut
+        translate([wt,g_y,-eps]) hull()
+        {
+            translate([(g_x-h_xb)/2,0,0]) cube([h_xb-2*wt,eps,g_z-wt]);
+            translate([(g_x-n_x)/2,s_y,0]) cube([n_x-2*wt,eps,n_z-wt]);
+        }
+        
+        
+        // just... keep going
+        // go not cry
+        
+        // border cut
+        translate([wt-bt,g_y-bt/2,-eps]) hull()
+        {
+            translate([0,0-eps-g_d/2,0])cube([g_x-2*bt,eps,bt]);
+            translate([0,0-eps,0]) cube([g_x-2*bt,eps,bt]);
+            translate([(g_x-n_x)/2,s_y,0]) cube([n_x-2*bt,eps,bt]);
+        }
+        
+        // connecting cut
+        translate([(g_x-h_xb)/2+wt,g_y-wt-eps,-eps])
+            cube([h_xb-2*wt,wt+2*eps,g_z-wt]);
+        
+        
+        
         // adding product placement
         _pp_t = 1;
         translate([g_x/2,g_y/2-10,g_z-_pp_t-eps])
@@ -125,13 +289,16 @@ module closure_torso()
                     text(   text="PřF UK", size=10,
                             font="Arial:style=Bold",
                             halign="center", valign="center");
+
+        // This should be my magnum opus,
+        // my materialized wish for forgiveness..
         
         // adding msg
         _tt = 0.1;
         translate([g_x/2,g_y-15,g_z-wt+_tt-eps])
             rotate([0,180,0])
                 linear_extrude(_tt)
-                    text(   text="I am sorry Sarrah...", size=6,
+                    text(   text="I am so sorry Sarrah...", size=5.5,
                             font="Malgun Gothic:style=Bold",
                             halign="center", valign="center");
 
@@ -154,4 +321,31 @@ module closure_torso()
     }
 }
 
-closure_torso();
+
+// possible names = ["torso", "bust"]
+module closure_part(name)
+{
+    difference()
+    {
+        
+        // main geometry
+        closure();
+        
+        if(name != "torso")
+        {
+            translate([-eps,-eps,-eps])
+                cube([g_x+2*eps,g_y+2*eps,g_z+2*eps]);
+        }
+        
+        if(name != "bust")
+        {
+            translate([-eps,g_y-eps,-eps])
+                cube([g_x+2*eps,s_y+n_y+2*eps,s_z+2*eps]);
+            
+        }
+    }
+}
+
+
+
+closure_part("torso");
