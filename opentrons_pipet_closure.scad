@@ -36,8 +36,41 @@ h_xf = 80;
 h_xb = 78;
 h_y = 82;
 
+// shoulders parameters
+s_x = 40;
+// y dimension is measured from back holes center
+// e.g. requires adding distance from center to the border
+s_y = 17+(g_y-h_y)/2;
+// final height in z axis including roof
+s_z = 15;
+
+module closure_bust()
+{
+    difference()
+    {
+        union()
+        {
+            // shoulders
+            hull()
+            {
+                translate([(g_x-h_xf)/2,g_y-eps,0])
+                    cube([h_xb,eps,g_z]);
+                translate([g_x/2-s_x/2,g_y+s_y-eps,0])
+                    cube([s_x,eps,s_z]);
+            }
+            
+            // TODO neck
+            
+        }
+        
+    }
+    
+}
+
+closure_bust();
+
 // In the end, I only wish for closure.
-module closure()
+module closure_torso()
 {
     // bolt and nuts hole
     // front x offset
@@ -54,7 +87,7 @@ module closure()
     {
         // body basic shape
         round_cube(x=g_x,y=g_y,z=g_z,d=g_d);
-        
+    
         // main cut
         translate([wt,wt,-eps]) round_cube(x=g_x-2*wt,y=g_y-2*wt,z=g_z-wt+eps,d=g_d);
         
@@ -77,7 +110,23 @@ module closure()
             }
         }
         
-        // adding text
+        // adding product placement
+        _pp_t = 1;
+        translate([g_x/2,g_y/2-10,g_z-_pp_t-eps])
+            rotate([0,0,0])
+                linear_extrude(_pp_t+2*eps)
+                    text(   text="FEL ČVUT", size=10,
+                            font="Arial:style=Bold",
+                            halign="center", valign="center");
+        
+        translate([g_x/2,g_y/2+10,g_z-_pp_t-eps])
+            rotate([0,0,0])
+                linear_extrude(_pp_t+2*eps)
+                    text(   text="PřF UK", size=10,
+                            font="Arial:style=Bold",
+                            halign="center", valign="center");
+        
+        // adding msg
         _tt = 0.1;
         translate([g_x/2,g_y-15,g_z-wt+_tt-eps])
             rotate([0,180,0])
@@ -105,4 +154,4 @@ module closure()
     }
 }
 
-closure();
+closure_torso();
