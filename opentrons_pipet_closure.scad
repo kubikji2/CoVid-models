@@ -18,11 +18,17 @@ m3_bhd = 5.5;
 // bolt head height
 m3_bht = 2;
 
+// holes parameters
+h_xf = 80+1.5;
+h_xb = 79+1.5;
+h_y = 82;
+h_yo = 2.5;
+
 
 // basic geometry parameters
-g_x = 89;
-g_y = 91;
-g_z = 11;
+g_x = 90;
+g_y = 91+h_yo;
+g_z = 12;
 g_d = 4;
 // advanced geometry parameters
 // cut paramers
@@ -31,10 +37,9 @@ wt = 2;
 // locking-border thickness
 bt = 1; 
 
-// holes parameters
-h_xf = 80;
-h_xb = 78;
-h_y = 82;
+// pipet tip holder cuts parameters
+pth_y = 7.5+h_yo;
+pth_z = 6;
 
 // shoulders parameters
 s_x = 40;
@@ -86,10 +91,10 @@ module closure()
     // front x offset
     _xfo = (g_x-h_xf)/2;
     _xbo = (g_x-h_xb)/2;
-    _yo = (g_y-h_y)/2;
+    _yo = (g_y-h_y-h_yo)/2;
     
-    hps = [ [_xfo,_yo,-eps],
-            [g_x-_xfo,_yo,-eps],
+    hps = [ [_xfo,_yo+h_yo,-eps],
+            [g_x-_xfo,_yo+h_yo,-eps],
             [_xbo,g_y-_yo,-eps],
             [g_x-_xbo,g_y-_yo,-eps]];
     
@@ -120,7 +125,8 @@ module closure()
         }
     
         // main cut
-        translate([wt,wt,-eps]) round_cube(x=g_x-2*wt,y=g_y-2*wt,z=g_z-wt+eps,d=g_d);
+        translate([wt,wt,-eps])
+            round_cube(x=g_x-2*wt,y=g_y-2*wt,z=g_z-wt+eps,d=g_d);
         
         // border cut 
         translate([bt,bt,-eps]) round_cube(x=g_x-2*bt,y=g_y-2*bt,z=bt+eps,d=g_d);
@@ -128,6 +134,8 @@ module closure()
         // frontal cut
         translate([g_d,-eps,-eps]) cube([g_x-2*g_d,wt+2*eps,g_z-wt+eps]);
 
+        // pipet tip holder side cuts
+        translate([-eps,-eps,-eps]) cube([g_x+2*eps,pth_y+eps,pth_z+eps]);
       
         // nuts and bolts holes
         for (i=[0:len(hps)-1])
@@ -141,7 +149,9 @@ module closure()
             }
         }
         
-        // neck cuts
+        ///////////////
+        // NECK CUTS //
+        ///////////////
         translate([g_x/2-n_x/2,g_y+s_y,0])
         {
             // digging trench
@@ -183,6 +193,9 @@ module closure()
                 }                
             }
             
+            ///////////////////////
+            // NECK INTERIOR CUT //
+            ///////////////////////
             difference()
             {
                 union()
@@ -225,7 +238,7 @@ module closure()
             
             // I just want to be sure, that I am not bad person.
             
-            // sloped cut
+            // side sloped cut
             translate([-eps,sc_y1,0]) hull()
             {
                 // lower front
@@ -306,18 +319,31 @@ module closure()
     
     
     // adding bold distancers
-    for(i=[0:len(hps)-1])
+    difference()
     {
-        translate(hps[i])
-        translate([0,0,bt])
-        difference()
+        union()
         {
-            _h = g_z-bt-wt;
-            // outer shell
-            cylinder(d=2+m3_bd,h=_h);
-            // bolt hole
-            translate([0,0,-eps]) cylinder(d=m3_bd,h=_h+2*eps);
+            for(i=[0:len(hps)-1])
+            {
+                translate(hps[i])
+                translate([0,0,bt])
+                difference()
+                {
+                    _h = g_z-bt-wt;
+                    _D = 2+m3_bd;
+                    // outer shell
+                    cylinder(d=_D,h=_h);
+                    // bolt hole
+                    translate([0,0,-eps])
+                        cylinder(d=m3_bd,h=_h+2*eps);
+                }
+            }
         }
+        
+        // pipet tip holder cut
+        translate([-eps,-eps,-eps])
+            cube([g_x+2*eps,pth_y+eps,pth_z+eps]);
+        
     }
 }
 
@@ -348,4 +374,4 @@ module closure_part(name)
 
 
 
-closure_part("torso");
+closure_part("bust");
