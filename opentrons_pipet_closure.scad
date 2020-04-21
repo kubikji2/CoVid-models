@@ -20,7 +20,7 @@ m3_bht = 2;
 
 // holes parameters
 h_xf = 80+1.5;
-h_xb = 79+1.5;
+h_xb = 79+1;
 h_y = 82;
 h_yo = 2.5;
 
@@ -45,14 +45,15 @@ pth_z = 6;
 s_x = 40;
 // y dimension is measured from back holes center
 // e.g. requires adding distance from center to the border
-s_y = 17+(g_y-h_y)/2;
+s_y = 17-(g_y-h_y)/2+h_yo;
+echo(s_y);
 // final height in z axis including roof
 s_z = 15;
 
 // neck parameters
 n_x = s_x;
-n_y = 22;
-n_z = 13.5;
+n_y = 21;
+n_z = 13;
 
 // neck holes parameters
 nhl_d = 5.8;
@@ -67,11 +68,11 @@ nhu_rh = 6;
 nhu_l = nhu_ld/2+nhu_rD/2+14.4;
 
 nhu_xo = 7+nhu_ld/2;
-nhu_yo = n_y-(4.5+nhu_ld/2);
+nhu_yo = n_y-(3.5+nhu_ld/2);
 
 // neck sloped cut
 sc_y1 = 2;
-sc_y2 = 7;
+sc_y2 = 8;
 
 // trench parameters
 t_y = n_y-13;
@@ -113,9 +114,11 @@ module closure()
             {
                 translate([0,g_y-eps,0])
                     cube([g_x,eps,g_z]);
-                translate([g_x/2-s_x/2,g_y+s_y-eps,0])
+                translate([g_x/2-s_x/2,g_y+s_y-eps-1,0])
                     cube([s_x,eps,s_z]);
             }
+            translate([g_x/2-s_x/2,g_y+s_y-eps-1,0])
+                    cube([s_x,1+eps,s_z]);
             
             // neck
             translate([(g_x/2-n_x/2),g_y+s_y,0])
@@ -196,6 +199,7 @@ module closure()
             ///////////////////////
             // NECK INTERIOR CUT //
             ///////////////////////
+            
             difference()
             {
                 union()
@@ -241,23 +245,25 @@ module closure()
             // side sloped cut
             translate([-eps,sc_y1,0]) hull()
             {
+                _h = 2*wt;
                 // lower front
-                rotate([0,90,0]) cylinder(h=wt+2*eps,d=eps);
+                rotate([0,90,0]) cylinder(h=_h,d=eps);
                 // lower back
                 translate([0,n_y-sc_y1,0]) rotate([0,90,0])
-                    cylinder(h=wt+2*eps,d=eps);
+                    cylinder(h=_h,d=eps);
                 // upper back
                 translate([0,n_y-sc_y1,n_z-wt]) rotate([0,90,0])
-                    cylinder(h=wt+2*eps,d=eps);
+                    cylinder(h=_h,d=eps);
                                 // upper back
                 translate([0,n_y-sc_y1-sc_y2,n_z-wt]) rotate([0,90,0])
-                    cylinder(h=wt+2*eps,d=eps);
+                    cylinder(h=_h,d=eps);
             }
+            
             
             // cubic cut next to the sloped cut
             // TODO might be optional
             translate([-eps,n_y-sc_y2+eps,-eps])
-                cube([(n_x-f_xu)/2-wt,sc_y2,n_z-wt+2*eps]);
+                cube([(n_x-f_xu)/2-wt,sc_y2,n_z-bt+2*eps]);
                         
         
         }
@@ -284,7 +290,7 @@ module closure()
         {
             translate([0,0-eps-g_d/2,0])cube([g_x-2*bt,eps,bt]);
             translate([0,0-eps,0]) cube([g_x-2*bt,eps,bt]);
-            translate([(g_x-n_x)/2,s_y+bt,0]) cube([n_x-2*bt,eps,bt]);
+            translate([(g_x-n_x)/2,s_y-bt,0]) cube([n_x-2*bt,bt+eps,bt]);
         }
         
         // connecting cut
@@ -362,7 +368,7 @@ module closure_part(name)
         
         // main geometry
         closure();
-        /*
+        
         if(name != "torso")
         {
             translate([-eps,-eps,-eps])
@@ -375,7 +381,7 @@ module closure_part(name)
                 cube([g_x+2*eps,s_y+n_y+2*eps,s_z+2*eps]);
             
         }
-        */
+        
     }
 }
 
