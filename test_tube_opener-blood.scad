@@ -7,30 +7,32 @@ tol = 0.25;
 // test tube parameters
 // handle part height
 h = 10;
-// diamter of the test tube
-d = 18.5;
 // wall thickness for the middle part (test tube holder)
-w_T = 5;
-// middle part (test tube holder) diameter
-D = 2*w_T+d;
+w_T = 3;
 // distance from the test tube hole to the bottom of the model
 H = 13+5;
 // depth of the testube hole
 h_i = 5;
 // cone base diameter
 d_i = 2;
+// diamter of the test tube
+d = 14.5+d_i/2;
+// middle part (test tube holder) diameter
+D = 2*w_T+d;
+
+%translate([0,0,H-h_i]) cylinder(d=d-1,h=18);
 
 // lever parameters
 //l_h = 18;
-l_d = 17;
-l_l = 50;
+l_d = 15;
+l_l = 40;
 l_t = 3;
 
 // pusher parameters
-p_d = 8;
-p_D = 10;
+p_d = 6;
+p_D = 8;
 p_t = 2;
-p_l = 24+H-h_i;
+p_l = 20+H-h_i;
 
 // finger protective shield parameters
 // protective shield wall thickness
@@ -101,12 +103,16 @@ module test_tube_opener()
         
         // texts
         translate([0,0,-eps]) arch_text(" JIRI KUBIK ",
-            size=2.5, r=9, t=1, inv=true,
+            size=2.25, r=7.5, t=1, inv=true,
             font="Arial:style=Bold");
+        /*
         translate([0,0,-eps]) inv_arch_text(" FEE CTU ",
-            size=3, r=8, t=1, inv=true,
+            size=3, r=7, t=1, inv=true,
             font="Arial:style=Bold");
-        
+        */
+        translate([0,0,-eps]) inv_arch_text(" FEL CVUT ",
+            size=2.25, r=7.5, t=1, inv=true,
+            font="Arial:style=Bold");
     }
     
     // inner teeth for better friction
