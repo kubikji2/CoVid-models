@@ -16,7 +16,7 @@ h_i = 5;
 // cone base diameter
 d_i = 2;
 // diamter of the test tube
-d = 14.5+d_i/2;
+d = 14+d_i/2;
 // middle part (test tube holder) diameter
 D = 2*w_T+d;
 
@@ -117,9 +117,9 @@ module test_tube_opener()
     
     // inner teeth for better friction
     translate([0,0,H-h_i])
-    for(i=[1:60])
+    for(i=[1:45])
     {
-        rotate([0,0,i*6]) translate([d/2,0,0])
+        rotate([0,0,i*(360/45)]) translate([d/2,0,0])
             cylinder(d2=d_i/2,d1=d_i,h=h_i);
     }    
     
