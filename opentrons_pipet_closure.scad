@@ -46,19 +46,19 @@ s_x = 40;
 // y dimension is measured from back holes center
 // e.g. requires adding distance from center to the border
 s_y = 17-(g_y-h_y)/2+h_yo;
-echo(s_y);
+//echo(s_y);
 // final height in z axis including roof
 s_z = 15;
 
 // neck parameters
 n_x = s_x;
-n_y = 21;
+n_y = 20;
 n_z = 13;
 
 // neck holes parameters
 nhl_d = 5.8;
 nhl_l = nhl_d+24;
-nhl_yo = n_y - nhl_d/2 - 14.5;
+nhl_yo = n_y - nhl_d/2 - 13.5;
 
 // neck holes upper left diameter
 nhu_ld = 5.7;
@@ -83,6 +83,10 @@ f_xl = 21;
 f_xu = 13;
 f_yl = 7.6;
 f_d = 1.7;
+
+// support beams
+sb_w = 5;
+sb_t = 2;
 
 
 // In the end, I only wish for closure.
@@ -118,7 +122,7 @@ module closure()
                     cube([s_x,eps,s_z]);
             }
             translate([g_x/2-s_x/2,g_y+s_y-eps-1,0])
-                    cube([s_x,1+eps,s_z]);
+                    cube([s_x,1+eps,s_z-bt]);
             
             // neck
             translate([(g_x/2-n_x/2),g_y+s_y,0])
@@ -128,15 +132,43 @@ module closure()
         }
     
         // main cut
-        translate([wt,wt,-eps])
-            round_cube(x=g_x-2*wt,y=g_y-2*wt,z=g_z-wt+eps,d=g_d);
+        difference()
+        {
+            translate([wt,wt,-eps])
+                round_cube(x=g_x-2*wt,y=g_y-2*wt,z=g_z-wt+eps,d=g_d);
+            // support beams
+            // front <-> beack
+            for(i=[1:3])
+            {
+                _xo = (g_x/4)*i-sb_w/2;
+                translate([_xo,0,g_z-wt-sb_t])
+                    cube([sb_w,g_y,sb_t]);
+            }
+            // left <-> right
+            for(i=[2:4])
+            {
+                
+                _w = (i==2) ? 2*sb_w : sb_w;
+                _yo = (g_x/4)*i-sb_w/2;
+                //echo(_yo);
+                translate([0,_yo,g_z-wt-sb_t])
+                    cube([g_x,_w,sb_t]);
+            }
+        }
         
         // border cut 
-        translate([bt,bt,-eps]) round_cube(x=g_x-2*bt,y=g_y-2*bt,z=bt+eps,d=g_d);
+        translate([bt,bt,-eps])
+            round_cube(x=g_x-2*bt,y=g_y-2*bt,z=bt+eps,d=g_d);
         
         // frontal cut
         _fc_xo = (g_x-h_xf)/2+m3_bd/2+1;
-        translate([_fc_xo,-eps,-eps]) cube([g_x-2*_fc_xo,wt+2*eps,g_z-wt+eps]);
+        translate([_fc_xo,-eps,-eps])
+            cube([g_x-2*_fc_xo,wt+2*eps,g_z-wt+eps-sb_t]);
+        
+        // connecting cut
+        // torso <-> shoulders
+        translate([(g_x-h_xb)/2+wt,g_y-wt-eps,-eps])
+            cube([h_xb-2*wt,wt+2*eps,g_z-wt-sb_t]);
 
         // pipet tip holder side cuts
         translate([-eps,-eps,-eps]) cube([g_x+2*eps,pth_y+eps,pth_z+eps]);
@@ -270,10 +302,25 @@ module closure()
         }
         
         // shoulders inner cut
-        translate([wt,g_y,-eps]) hull()
+        difference()
         {
-            translate([(g_x-h_xb)/2,0,0]) cube([h_xb-2*wt,eps,g_z-wt]);
-            translate([(g_x-n_x)/2,s_y-wt,0]) cube([n_x-2*wt,eps,n_z-wt]);
+            translate([wt,g_y,-eps]) hull()
+            {
+                translate([(g_x-h_xb)/2,0,0]) cube([h_xb-2*wt,eps,g_z-wt]);
+                translate([(g_x-n_x)/2,s_y-wt,0]) cube([n_x-2*wt,eps,n_z-wt]);
+            }
+            
+            // support beams
+            for(i=[1:3])
+            {
+                _xo = (g_x/4)*i-sb_w/2;
+                if(i!=2)
+                {
+                    translate([_xo,g_y,g_z-wt-sb_t])
+                        cube([sb_w,g_y,g_z]);
+                }
+            }
+            // ... beam me up, Sarrah
         }
         
         
@@ -286,19 +333,20 @@ module closure()
         translate([g_x/2-sn_x/2,g_y+s_y-wt-eps,-eps])
             cube([sn_x,2*wt+2*eps,s_z-wt+2*eps]);
         
-        // border cut
+        // soulder border cut
+        translate([wt-bt,g_y-bt-eps-g_d/2,-eps])
+            cube([g_x-2*bt,g_d/2+bt+s_y-bt,bt]);
+        translate([0,g_y-eps,-eps])
+            cube([g_x,bt+s_y-bt+2*eps,bt]);
+        /*
         translate([wt-bt,g_y-bt,-eps]) hull()
         {
-            translate([0,0-eps-g_d/2,0])cube([g_x-2*bt,eps,bt]);
+            #translate([0,0-eps-g_d/2,0])cube([g_x-2*bt,eps,bt]);
             translate([0,0-eps,0]) cube([g_x-2*bt,eps,bt]);
             translate([(g_x-n_x)/2,s_y-bt,0]) cube([n_x-2*bt,bt+eps,bt]);
         }
-        
-        // connecting cut
-        translate([(g_x-h_xb)/2+wt,g_y-wt-eps,-eps])
-            cube([h_xb-2*wt,wt+2*eps,g_z-wt]);
-        
-        
+        */
+          
         
         // adding product placement
         _pp_t = 1;
@@ -319,14 +367,18 @@ module closure()
         // This should be my magnum opus,
         // my materialized wish for forgiveness..
         
-        // adding msg
+        // adding msg to the main support beam...
         _tt = 0.1;
-        translate([g_x/2,g_y-15,g_z-wt+_tt-eps])
+        translate([g_x/2,g_y/2,g_z-wt+_tt-eps-sb_t])
             rotate([0,180,0])
                 linear_extrude(_tt)
                     text(   text="I am so sorry Sarrah...", size=5.5,
                             font="Malgun Gothic:style=Bold",
                             halign="center", valign="center");
+
+        // ... but will she?
+        // ... but is it enough?
+        // ... but did these weeks make me a better human being?
 
     }   
     
@@ -358,8 +410,10 @@ module closure()
             cube([g_x+2*eps,pth_y+eps,pth_z+eps]);
         
     }
+    
 }
 
+//closure();
 
 // possible names = ["torso", "bust"]
 module closure_part(name)
@@ -388,4 +442,4 @@ module closure_part(name)
 
 
 
-closure_part("torso");
+closure_part("bust");
