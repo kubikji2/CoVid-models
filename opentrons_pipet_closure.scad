@@ -29,7 +29,7 @@ h_yo = 2.5;
 g_x = 90;
 g_y = 91+h_yo;
 g_z = 12;
-g_d = 4;
+g_d = 8;
 // advanced geometry parameters
 // cut paramers
 // wall thickness
@@ -135,7 +135,8 @@ module closure()
         translate([bt,bt,-eps]) round_cube(x=g_x-2*bt,y=g_y-2*bt,z=bt+eps,d=g_d);
         
         // frontal cut
-        translate([g_d,-eps,-eps]) cube([g_x-2*g_d,wt+2*eps,g_z-wt+eps]);
+        _fc_xo = (g_x-h_xf)/2+m3_bd/2+1;
+        translate([_fc_xo,-eps,-eps]) cube([g_x-2*_fc_xo,wt+2*eps,g_z-wt+eps]);
 
         // pipet tip holder side cuts
         translate([-eps,-eps,-eps]) cube([g_x+2*eps,pth_y+eps,pth_z+eps]);
@@ -387,4 +388,4 @@ module closure_part(name)
 
 
 
-closure_part("bust");
+closure_part("torso");
