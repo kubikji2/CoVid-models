@@ -1,23 +1,29 @@
 $fn = 90;
 eps = 0.01;
 
+// included modules
+use<round_corners.scad>;
+
 // plate parameters
 p_x = 119;
 p_y = 76.5;
 p_t = 1;
+p_d = 5;
 
 g_l = 9;
-p_d = 7;
+h_d = 7;
 
 wt = 2;
 
 module chess_plate()
 {   
+    
     // main plate
     difference()
     {
         // main shape
-        cube([p_x,p_y,p_t]);
+        round_cube(x=p_x,y=p_y,z=p_t,d=p_d);
+        //cube([p_x,p_y,p_t]);
         
         for(i=[0:11])
         {
@@ -28,17 +34,19 @@ module chess_plate()
                 if((i+j)% 2 == 0)
                 {
                     translate([_xo,_yo,-eps])
-                        cylinder(d=p_d,h=p_t+2*eps);
+                        cylinder(d=h_d,h=p_t+2*eps);
                 } else {
                     %translate([_xo,_yo,-eps])
-                        cylinder(d=p_d,h=p_t+2*eps);
+                        cylinder(d=h_d,h=p_t+2*eps);
                 }
                 
             }
         }
     }   
     
+    
     // adding hooks
+       
     
     
 }
