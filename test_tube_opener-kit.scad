@@ -9,15 +9,15 @@ tol = 0.25;
 h = 10;
 // wall thickness for the middle part (test tube holder)
 w_T = 3;
-// distance from the test tube hole to the bottom of the model
+// distance from the test tube hole bottom to the bottom of the model
 H = 10+2;
-// depth of the testube hole
+// depth of the testube hole (e.g. how deep is the test tube cub in opener)
 h_i = 6;
 // cone base diameter
 d_i = 2;
-// diamter of the test tube
+// diameter of the test tube
 d = 12.8+d_i/2;
-// middle part (test tube holder) diameter
+// middle par opener diameter
 D = 2*w_T+d;
 
 %translate([0,0,H-h_i]) cylinder(d=d-1,h=18);
@@ -27,14 +27,6 @@ D = 2*w_T+d;
 l_d = 15;
 l_l = 40;
 l_t = 3;
-
-// pusher parameters
-/*
-p_d = 6;
-p_D = 8;
-p_t = 2;
-p_l = 20+H-h_i;
-*/
 
 // finger protective shield parameters
 // protective shield wall thickness
@@ -77,15 +69,6 @@ module test_tube_opener()
         translate([0, 0, H-h_i-eps])
             cylinder(h=h_i+2*eps,d=d);
         
-        // main hole for the pusher (middle part)
-        /*
-        translate([0,0,-eps])
-            cylinder(d=p_d+2*tol,h=p_l);
-        translate([0,0,-eps])
-            cylinder(d=p_D+2*tol,h=p_t+2*eps);
-        translate([0,0,p_t-eps])
-            cylinder(d2=p_d+2*tol, d1=p_D+2*tol, h=p_D-p_d);
-        */
         // left hole in lever for better grip
         translate([-l_l/2,0,-eps])
         {
@@ -126,19 +109,6 @@ module test_tube_opener()
             cylinder(d2=d_i/2,d1=d_i,h=h_i);
     }    
     
-    /*
-    // inner pusher
-    cylinder(d=p_d,h=p_l);
-    cylinder(d=p_D,h=p_t+2*eps);
-    translate([0,0,p_t])
-        cylinder(d2=p_d, d1=p_D, h=p_D-p_d);
-    
-    translate([0,0,p_l-p_t])
-        cylinder(d=p_D,h=p_t+2*eps);
-    translate([0,0,p_l-p_t-(p_D-p_d)])
-        cylinder(d1=p_d, d2=p_D, h=p_D-p_d);
-    
-    */
     // finger protective shielding
     translate([0,0,H]) difference()
     {
