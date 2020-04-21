@@ -262,23 +262,29 @@ module closure()
         
         }
         
-        // shoulders cut
+        // shoulders inner cut
         translate([wt,g_y,-eps]) hull()
         {
             translate([(g_x-h_xb)/2,0,0]) cube([h_xb-2*wt,eps,g_z-wt]);
-            translate([(g_x-n_x)/2,s_y,0]) cube([n_x-2*wt,eps,n_z-wt]);
+            translate([(g_x-n_x)/2,s_y-wt,0]) cube([n_x-2*wt,eps,n_z-wt]);
         }
         
         
         // just... keep going
         // go not cry
+                
+        // shoulder <-> neck cut
+        sn_x = n_x-4*wt-2*nhl_d;
+        //echo(sn_x);
+        translate([g_x/2-sn_x/2,g_y+s_y-wt-eps,-eps])
+            cube([sn_x,2*wt+2*eps,s_z-wt+2*eps]);
         
         // border cut
-        translate([wt-bt,g_y-bt/2,-eps]) hull()
+        translate([wt-bt,g_y-bt,-eps]) hull()
         {
             translate([0,0-eps-g_d/2,0])cube([g_x-2*bt,eps,bt]);
             translate([0,0-eps,0]) cube([g_x-2*bt,eps,bt]);
-            translate([(g_x-n_x)/2,s_y,0]) cube([n_x-2*bt,eps,bt]);
+            translate([(g_x-n_x)/2,s_y+bt,0]) cube([n_x-2*bt,eps,bt]);
         }
         
         // connecting cut
@@ -356,7 +362,7 @@ module closure_part(name)
         
         // main geometry
         closure();
-        
+        /*
         if(name != "torso")
         {
             translate([-eps,-eps,-eps])
@@ -369,6 +375,7 @@ module closure_part(name)
                 cube([g_x+2*eps,s_y+n_y+2*eps,s_z+2*eps]);
             
         }
+        */
     }
 }
 
