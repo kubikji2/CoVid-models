@@ -5,8 +5,8 @@ eps = 0.01;
 use<round_corners.scad>;
 
 // plate parameters
-p_x = 119;
-p_y = 76.5;
+p_x = 124;
+p_y = 82;
 p_t = 2;
 p_d = 5;
 p_c = 5;
@@ -55,6 +55,9 @@ module chess_plate()
             {
                 _xo = (p_x-12*g_l)/2 + g_l/2 + g_l*i;
                 _yo = (p_y-8*g_l)/2 + g_l/2 + g_l*j;
+                
+                // 0 for green
+                // 1 for orange
                 if((i+j)% 2 == 0)
                 {
                     translate([_xo,_yo,-eps])
@@ -91,10 +94,7 @@ module chess_plate()
         translate([p_x-p_c,p_y,0])
             rotate([0,0,-135])
                 cube([2*p_c,2*p_c,2*p_c]);
-    }
-    
-    
-    
+    }    
 }
 
 chess_plate();
