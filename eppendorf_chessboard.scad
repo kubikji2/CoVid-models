@@ -18,7 +18,7 @@ wt = 2;
 
 // hooks parameters
 h_l = 15;
-h_o = 3;
+h_o = 1;
 h_t = 4;
 h_so = 15;
 
@@ -28,10 +28,10 @@ module hook()
         difference()
         {
             // main shape
-            cube([h_l,h_t,h_o+h_t]);
+            cube([h_l,h_t,h_o+h_t/2+p_t]);
             
             // border cut
-            translate([-eps,h_t/2+eps,h_o+h_t-h_t/2+eps])
+            #translate([-eps,h_t/2+eps,h_o+p_t+eps])
                 cube([h_l+2*eps,h_t/2,h_t/2]);
             
         }
@@ -58,13 +58,21 @@ module chess_plate()
                 
                 // 0 for green
                 // 1 for orange
-                if((i+j)% 2 == 0)
+                _c = 0;
+                if((i/2+j) % 2 == _c)
                 {
-                    translate([_xo,_yo,-eps])
-                        cylinder(d=h_d,h=p_t+2*eps);
+                    if (i % 2 == 0)
+                    {
+                        translate([_xo,_yo,-eps])
+                            cylinder(d=h_d,h=p_t+2*eps);
+                    } else {
+                        %translate([_xo,_yo,-eps])
+                            cylinder(d=h_d,h=p_t+2*eps);
+                    }
                 } else {
+                    // dummy holes
                     %translate([_xo,_yo,-eps])
-                        cylinder(d=h_d,h=p_t+2*eps);
+                            cylinder(d=h_d,h=p_t+2*eps);
                 }
                 
             }
