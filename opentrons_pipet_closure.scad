@@ -306,8 +306,10 @@ module closure()
         {
             translate([wt,g_y,-eps]) hull()
             {
-                translate([(g_x-h_xb)/2,0,0]) cube([h_xb-2*wt,eps,g_z-wt]);
-                translate([(g_x-n_x)/2,s_y-wt,0]) cube([n_x-2*wt,eps,n_z-wt]);
+                translate([(g_x-h_xb)/2,0,0])
+                    cube([h_xb-2*wt,eps,g_z-wt]);
+                translate([(g_x-n_x)/2,s_y-wt,0])
+                    cube([n_x-2*wt,eps,n_z-wt]);
             }
             
             // support beams
@@ -330,23 +332,14 @@ module closure()
         // shoulder <-> neck cut
         sn_x = n_x-4*wt-2*nhl_d;
         //echo(sn_x);
-        translate([g_x/2-sn_x/2,g_y+s_y-wt-eps,-eps])
-            cube([sn_x,2*wt+2*eps,s_z-wt+2*eps]);
+        #translate([g_x/2-sn_x/2,g_y+s_y-2*wt-eps,-eps])
+            cube([sn_x,3*wt+2*eps,s_z-wt+2*eps]);
         
         // soulder border cut
         translate([wt-bt,g_y-bt-eps-g_d/2,-eps])
             cube([g_x-2*bt,g_d/2+bt+s_y-bt,bt]);
         translate([0,g_y-eps,-eps])
-            cube([g_x,bt+s_y-bt+2*eps,bt]);
-        /*
-        translate([wt-bt,g_y-bt,-eps]) hull()
-        {
-            #translate([0,0-eps-g_d/2,0])cube([g_x-2*bt,eps,bt]);
-            translate([0,0-eps,0]) cube([g_x-2*bt,eps,bt]);
-            translate([(g_x-n_x)/2,s_y-bt,0]) cube([n_x-2*bt,bt+eps,bt]);
-        }
-        */
-          
+            cube([g_x,bt+s_y-bt+2*eps,bt]);          
         
         // adding product placement
         _pp_t = 1;
