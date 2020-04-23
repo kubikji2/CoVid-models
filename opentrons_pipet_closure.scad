@@ -23,12 +23,13 @@ h_xf = 80+1.5;
 h_xb = 79+1;
 h_y = 82;
 h_yo = 2.5;
-
+// hole offsets
+h_o = 0.5;
 
 // basic geometry parameters
 g_x = 90;
 g_y = 91+h_yo;
-g_z = 12;
+g_z = 12+0.5;
 g_d = 8;
 // advanced geometry parameters
 // cut paramers
@@ -131,11 +132,15 @@ module closure()
             
         }
     
+        // frontal cut
+        _fc_xo = (g_x-h_xf)/2+m3_bd/2+1;
+        
         // main cut
         difference()
         {
             translate([wt,wt,-eps])
                 round_cube(x=g_x-2*wt,y=g_y-2*wt,z=g_z-wt+eps,d=g_d);
+            
             // support beams
             // front <-> beack
             for(i=[1:3])
@@ -144,6 +149,7 @@ module closure()
                 translate([_xo,0,g_z-wt-sb_t])
                     cube([sb_w,g_y,sb_t]);
             }
+            
             // left <-> right
             for(i=[2:4])
             {
@@ -154,6 +160,12 @@ module closure()
                 translate([0,_yo,g_z-wt-sb_t])
                     cube([g_x,_w,sb_t]);
             }
+            
+            // front corners reinforcements
+            translate([0,wt,-eps])
+                cube([_fc_xo,g_d-eps,g_z-wt]);
+            translate([g_x-_fc_xo,wt,-eps])
+                cube([_fc_xo,g_d-eps,g_z-wt]);
         }
         
         // border cut 
@@ -161,7 +173,6 @@ module closure()
             round_cube(x=g_x-2*bt,y=g_y-2*bt,z=bt+eps,d=g_d);
         
         // frontal cut
-        _fc_xo = (g_x-h_xf)/2+m3_bd/2+1;
         translate([_fc_xo,-eps,-eps])
             cube([g_x-2*_fc_xo,wt+2*eps,g_z-wt+eps-sb_t]);
         
@@ -332,7 +343,7 @@ module closure()
         // shoulder <-> neck cut
         sn_x = n_x-4*wt-2*nhl_d;
         //echo(sn_x);
-        #translate([g_x/2-sn_x/2,g_y+s_y-2*wt-eps,-eps])
+        translate([g_x/2-sn_x/2,g_y+s_y-2*wt-eps,-eps])
             cube([sn_x,3*wt+2*eps,s_z-wt+2*eps]);
         
         // soulder border cut
@@ -399,14 +410,14 @@ module closure()
         }
         
         // pipet tip holder cut
-        translate([-eps,-eps,-eps])
+        translate([-eps,-eps,-eps-h_o])
             cube([g_x+2*eps,pth_y+eps,pth_z+eps]);
         
     }
     
 }
 
-//closure();
+closure();
 
 // possible names = ["torso", "bust"]
 module closure_part(name)
@@ -435,4 +446,4 @@ module closure_part(name)
 
 
 
-closure_part("bust");
+//closure_part("bust");
