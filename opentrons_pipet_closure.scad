@@ -46,7 +46,7 @@ pth_z = 6;
 s_x = 40;
 // y dimension is measured from back holes center
 // e.g. requires adding distance from center to the border
-s_y = 17-(g_y-h_y)/2+h_yo;
+s_y = 17+0.5-(g_y-h_y)/2+h_yo;
 //echo(s_y);
 // final height in z axis including roof
 s_z = 15;
