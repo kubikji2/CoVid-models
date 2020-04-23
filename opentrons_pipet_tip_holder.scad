@@ -40,7 +40,7 @@ c_yo = 1.5-2;
 // connector dimension in y axis
 c_y = 2*c_wt;
 // connector dimension in z axis
-c_z = mt_l+3.2+c_bd+c_wt;
+c_z = mt_l+3.2+0.5+c_bd+c_wt;
 
 
 // box parameters
