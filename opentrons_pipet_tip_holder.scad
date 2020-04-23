@@ -242,8 +242,10 @@ module pipet_tip_holder()
                     // bolt hole
                     cylinder(d=c_bd,h=g_l/2+c_yo+2*eps);
                     // nut hole
+                    /*
                     translate([0,0,g_l/2+c_yo-1+eps])
                         cylinder(d=c_nd,h=g_l/4+2*eps,$fn=6);
+                    */
                 }
                               
                 
