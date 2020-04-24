@@ -12,19 +12,19 @@ wt = 2;
 wh = 10;
 
 // holder parameters
-h_x = 84;
+h_x = 30;
 h_y = 90;
 h_z = wt;
 
 // well paramters
 w_y = 83;
 echo(w_xo);
-w_xo = 4.5;
+w_xo = 3.5+wt;
 w_yo = (h_y-w_y)/2;
 
 
 // locker parameters
-l_x = w_xo-wt;
+l_x = wt;
 // additional locker extention for higher labware
 l_extention = -5;
 // lower y dimension
@@ -43,12 +43,49 @@ sb_x = 2;
 sb_y = 4;
 sb_yo = 3;
 
+module border(size=[h_x-w_xo+wt, wt,wh])
+{
+    _x = size[0];
+    _y = size[1];
+    _z = size[2];
+    
+    translate([-_x/2,-_y/2,0])
+    hull()
+    {
+        translate([_y,0,_y])
+            cube([_x-2*_y,_y/2,_z-2*_y]);
+        translate([0,_y,0])
+            cube([_x,eps,_z]);
+    }
+    
+}
+
+//border();
+
 module mag_holder_compact()
 {
     difference()
     {
-        // main shape
-        cube([h_x,h_y,h_z]);
+        
+        union()
+        {
+            // main shape
+            cube([h_x,h_y,h_z]);
+        
+            // adding borders
+            // left border
+            translate([wt,w_yo,h_z])
+                cube([w_xo-wt,h_y-2*w_yo,wh]);
+            // front border
+            by_l = h_x-wt;
+            translate([wt+by_l/2,w_yo-wt/2,h_z-wt])
+                border([by_l, wt, wt+wh]);
+
+            // back border
+            translate([by_l/2+wt,h_y-w_yo+wt/2,h_z-wt])
+                rotate([0,0,180])
+                    border([by_l, wt, wt+wh]);
+        }
         
         // well cut
         translate([w_xo,w_yo,-eps])
@@ -57,27 +94,6 @@ module mag_holder_compact()
         // locker connection hole
         translate([-eps,(l_yl-l_yu)/2+(h_y-l_yl)/2,-eps])
             cube([l_x+eps,l_yu,l_zl+l_zu]);
-        
-    }
-   
-    
-    difference()
-    {
-        // borders
-        union()
-        {
-            // adding borders
-            // left border
-            translate([w_xo-wt,w_yo-wt,h_z])
-                cube([wt,h_y-2*w_yo+2*wt,wh]);
-            // left border
-            translate([w_xo-wt,w_yo-wt,h_z])
-                cube([h_x-w_xo+wt, wt,wh]);
-
-            // right border
-            translate([w_xo-wt,h_y-w_yo,h_z])
-                cube([h_x-w_xo+wt, wt,wh]);
-        }
         
         // cutting 
         txt = "CoVeni, CoVidi, CoVici";
@@ -88,10 +104,7 @@ module mag_holder_compact()
                             font="Arial:style=Bold",
                             halign="center", valign="center");
         
-        
     }
-    
-   
         
 }
 
