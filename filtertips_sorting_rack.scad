@@ -20,7 +20,7 @@ ft_mh = 28;
 n_rows = 8;
 n_cols = 12;
 // thickness of the grid
-g_t = 3;
+g_t = 4;
 // distance between centers
 g_l = 9;
 // horder height
@@ -38,6 +38,8 @@ d_s = 4;
 h_h = 12;
 h_d = 2;
 h_D = h_d + 4;
+// hinge end reinforcement
+h_r = 5;
 
 module hinge()
 {
@@ -106,7 +108,7 @@ module hinge_inv(l=1)
 module ftsr()
 {
     x = n_cols*g_l + 2*w_t;
-    y = 2*n_rows*g_l + w_t+d_s;
+    y = 2*n_rows*g_l + w_t+d_s+h_r;
     z = g_t + ft_mh + b_h;
     off = ft_ud;
     
@@ -120,7 +122,7 @@ module ftsr()
         hull()
         {
             l_ = x-2*w_t;
-            d_ = y-w_t-d_s;
+            d_ = y-w_t-d_s-h_r;
             
             translate([0,off,0])
                 rotate([0,-90,0]) cylinder(h=l_,d=0.01);
@@ -222,7 +224,7 @@ module ftsr()
     */
 }
 
-//ftsr();
+ftsr();
 
 module door()
 {
@@ -240,7 +242,7 @@ module door()
 }
 
 //translate([0,n_cols*g_l+50,35]) door();
-door();
+//door();
 
 
 module comb()
