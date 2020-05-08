@@ -224,7 +224,7 @@ module ftsr()
     */
 }
 
-ftsr();
+//ftsr();
 
 module door()
 {
@@ -241,7 +241,7 @@ module door()
     translate([x-h_h,-h_D-_l,-h_D+h_d/2-tol/2]) hinge_inv(l=_l);
 }
 
-//translate([0,n_cols*g_l+50,35]) door();
+//translate([0,n_cols*g_l+50,31.5]) rotate([-90,0,0])  door();
 //door();
 
 
@@ -319,7 +319,7 @@ module leg(t)
     }
 }
 
-//leg(g_l-ft_sd+0.5);
+leg(g_l-ft_sd);
 
 module leg_holder(t)
 {
