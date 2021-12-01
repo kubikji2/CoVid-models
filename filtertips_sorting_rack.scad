@@ -8,11 +8,11 @@ t_tol = 0.3;
 
 // filter tips parameters
 // stop diameter
-ft_sd = 5;
+ft_sd = 4.8;
 // upper diameter
 ft_ud = 7.5;
 // height
-ft_h = 15;
+ft_h = 5;
 // maximal height from stopper
 ft_mh = 28;
 
@@ -319,7 +319,7 @@ module leg(t)
     }
 }
 
-leg(g_l-ft_sd);
+//leg(g_l-ft_sd);
 
 module leg_holder(t)
 {
